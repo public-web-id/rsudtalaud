@@ -3,851 +3,1857 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manajemen Outsourcing RSUD Talaud</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script src="https://apis.google.com/js/api.js"></script>
+    <title>RSUD Kabupaten Kepulauan Talaud</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- Google Fonts - Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --primary-color: #1e40af;
-            --secondary-color: #3b82f6;
-            --accent-color: #f59e0b;
-            --dark-bg: #0f172a;
-            --light-bg: #f8fafc;
+            --primary-color: #1e88e5;
+            --secondary-color: #42a5f5;
+            --accent-color: #0d47a1;
+            --light-color: #e3f2fd;
+            --dark-color: #01579b;
+            --success-color: #4caf50;
+            --warning-color: #ff9800;
+            --danger-color: #f44336;
+            --info-color: #00bcd4;
         }
-
-        * {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
+        
         body {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
             min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px 0;
             overflow-x: hidden;
         }
-
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
+        
+        /* Fixed tablet container - smaller size */
+        .tablet-container {
+            width: 100%;
+            max-width: 900px; /* Reduced from 1024px */
+            min-height: 100vh;
+            background-color: #f8f9fa;
+            box-shadow: 0 0 40px rgba(0,0,0,0.15);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
         }
-
-        ::-webkit-scrollbar-track {
-            background: #1e293b;
+        
+        /* Override Bootstrap responsive behavior */
+        .container, .container-fluid {
+            max-width: 840px !important; /* Reduced from 960px */
+            padding-left: 18px !important; /* Reduced padding */
+            padding-right: 18px !important;
         }
-
-        ::-webkit-scrollbar-thumb {
-            background: #475569;
-            border-radius: 4px;
+        
+        /* Force tablet grid behavior */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-right: -8px; /* Reduced margin */
+            margin-left: -8px;
         }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #64748b;
+        
+        .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12,
+        .col, .col-auto, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12,
+        .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12,
+        .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12,
+        .col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12,
+        .col-xxl-1, .col-xxl-2, .col-xxl-3, .col-xxl-4, .col-xxl-5, .col-xxl-6, .col-xxl-7, .col-xxl-8, .col-xxl-9, .col-xxl-10, .col-xxl-11, .col-xxl-12 {
+            position: relative;
+            width: 100%;
+            padding-right: 8px; /* Reduced padding */
+            padding-left: 8px;
         }
-
-        /* Glass morphism effect */
-        .glass {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        
+        /* Force tablet column sizes */
+        .col-md-4, .col-lg-4, .col-xl-4, .col-xxl-4 {
+            flex: 0 0 33.333333%;
+            max-width: 33.333333%;
         }
-
-        /* Glow effect */
-        .glow {
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        
+        .col-md-3, .col-lg-3, .col-xl-3, .col-xxl-3 {
+            flex: 0 0 25%;
+            max-width: 25%;
         }
-
-        /* Fade in animation */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        
+        .col-md-6, .col-lg-6, .col-xl-6, .col-xxl-6 {
+            flex: 0 0 50%;
+            max-width: 50%;
         }
-
-        .fade-in {
-            animation: fadeIn 0.6s ease-out;
+        
+        .col-md-8, .col-lg-8, .col-xl-8, .col-xxl-8 {
+            flex: 0 0 66.666667%;
+            max-width: 66.666667%;
         }
-
-        /* Slide in animation */
-        @keyframes slideIn {
-            from {
-                transform: translateX(-100%);
-            }
-            to {
-                transform: translateX(0);
-            }
+        
+        .col-md-12, .col-lg-12, .col-xl-12, .col-xxl-12 {
+            flex: 0 0 100%;
+            max-width: 100%;
         }
-
-        .slide-in {
-            animation: slideIn 0.4s ease-out;
+        
+        /* New header with hamburger menu */
+        .header {
+            background-color: var(--primary-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 12px 18px; /* Reduced padding */
+            position: relative;
         }
-
-        /* Pulse animation */
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-
-        .pulse-hover:hover {
-            animation: pulse 0.3s ease-in-out;
+        
+        .navbar-brand {
+            font-weight: 600;
+            color: white !important;
+            font-size: 1.1rem; /* Reduced font size */
+            text-decoration: none;
+            display: flex;
+            align-items: center;
         }
-
-        /* Card hover effect */
-        .card-hover {
+        
+        /* Hamburger menu styles */
+        .hamburger-menu {
+            position: relative;
+            z-index: 1001;
+        }
+        
+        .hamburger-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 6px; /* Reduced padding */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px; /* Reduced size */
+            height: 22px;
             transition: all 0.3s ease;
         }
-
-        .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        
+        .hamburger-btn span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: white;
+            border-radius: 3px;
+            transition: all 0.3s ease;
         }
-
-        /* Tab indicator */
-        .tab-indicator {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        
+        .hamburger-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px); /* Adjusted for smaller size */
         }
-
-        /* Loading spinner */
-        .spinner {
-            border: 3px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            border-top: 3px solid #3b82f6;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
+        
+        .hamburger-btn.active span:nth-child(2) {
+            opacity: 0;
         }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        
+        .hamburger-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px); /* Adjusted for smaller size */
         }
-
-        /* Modal animation */
-        .modal-enter {
-            animation: modalEnter 0.3s ease-out;
-        }
-
-        @keyframes modalEnter {
-            from {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        /* Button styles */
-        .btn-primary {
-            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
-            position: relative;
+        
+        /* Dropdown menu styles */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            min-width: 230px; /* Reduced width */
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            margin-top: 8px; /* Reduced margin */
             overflow: hidden;
         }
-
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.3);
+        
+        .dropdown-menu.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .dropdown-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .dropdown-menu li {
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .dropdown-menu li:last-child {
+            border-bottom: none;
+        }
+        
+        .dropdown-menu a {
+            display: block;
+            padding: 12px 18px; /* Reduced padding */
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.9rem; /* Reduced font size */
+        }
+        
+        .dropdown-menu a:hover {
+            background-color: var(--light-color);
+            color: var(--primary-color);
+            padding-left: 22px; /* Reduced padding */
+        }
+        
+        .dropdown-menu a.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .dropdown-menu a i {
+            margin-right: 8px; /* Reduced margin */
+            font-size: 1rem; /* Reduced size */
+        }
+        
+        /* Hide original navbar elements */
+        .navbar-nav, .navbar-toggler, .navbar-collapse {
+            display: none !important;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 40px 0; /* Reduced padding */
+            margin-bottom: 25px; /* Reduced margin */
+        }
+        
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            height: 100%;
+            margin-bottom: 18px; /* Reduced margin */
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 25px 0 12px; /* Reduced padding */
+            margin-top: 35px; /* Reduced margin */
+        }
+        
+        .page-section {
+            display: none;
+            animation: fadeIn 0.5s;
+            padding-bottom: 18px; /* Reduced padding */
+        }
+        
+        .page-section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .org-chart {
+            padding: 18px 0; /* Reduced padding */
+            overflow-x: auto;
+            max-width: 100%;
+        }
+        
+        .org-box {
+            background-color: white;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 12px; /* Reduced padding */
+            margin: 8px auto; /* Reduced margin */
+            text-align: center;
+            position: relative;
+            max-width: 260px; /* Reduced width */
+            font-size: 0.85rem; /* Reduced font size */
+        }
+        
+        .org-box h5, .org-box h6 {
+            font-size: 0.9rem; /* Reduced font size */
+            margin-bottom: 4px;
+        }
+        
+        .org-box p {
+            font-size: 0.8rem; /* Reduced font size */
+            margin-bottom: 2px;
+        }
+        
+        .org-box.small {
+            max-width: 200px; /* Reduced width */
+            padding: 8px; /* Reduced padding */
+        }
+        
+        .org-box.director {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .org-box.plt {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .org-box.kasubag {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+        }
+        
+        .org-box.kabid {
+            background-color: #bbdefb;
+            color: var(--dark-color);
+        }
+        
+        .org-box.kasie {
+            background-color: #e1f5fe;
+            color: var(--dark-color);
+        }
+        
+        .org-line {
+            width: 2px;
+            height: 20px; /* Reduced height */
+            background-color: var(--primary-color);
+            margin: 0 auto;
+        }
+        
+        .org-horizontal-line {
+            height: 2px;
+            background-color: var(--primary-color);
+            margin: 8px 0; /* Reduced margin */
+        }
+        
+        .org-branch {
+            display: flex;
+            justify-content: center;
+            margin-top: 12px; /* Reduced margin */
+            flex-wrap: wrap;
+            gap: 8px; /* Reduced gap */
+        }
+        
+        .org-branch-item {
+            flex: 1;
+            min-width: 260px; /* Reduced width */
+            margin: 0 4px; /* Reduced margin */
+        }
+        
+        .org-vertical-line {
+            width: 2px;
+            height: 20px; /* Reduced height */
+            background-color: var(--primary-color);
+            margin: 0 auto;
+        }
+        
+        .org-sub-branch {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 12px; /* Reduced margin */
+            gap: 6px; /* Reduced gap */
+        }
+        
+        .org-sub-item {
+            flex: 1;
+            min-width: 160px; /* Reduced width */
+            margin: 0 2px 8px; /* Reduced margin */
+        }
+        
+        .testimonial {
+            background-color: var(--light-color);
+            border-left: 4px solid var(--primary-color);
+            padding: 18px; /* Reduced padding */
+            margin: 18px 0; /* Reduced margin */
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .accreditation-star {
+            color: #ffc107;
+            font-size: 1.8rem; /* Reduced size */
+        }
+        
+        .committee-card {
+            border-left: 4px solid var(--primary-color);
+            margin-bottom: 18px; /* Reduced margin */
+        }
+        
+        .room-card {
+            text-align: center;
+            padding: 18px; /* Reduced padding */
+            margin-bottom: 18px; /* Reduced margin */
+        }
+        
+        .room-icon {
+            font-size: 2.2rem; /* Reduced size */
+            color: var(--primary-color);
+            margin-bottom: 12px; /* Reduced margin */
+        }
+        
+        .facility-card {
+            background-color: var(--light-color);
+            border-radius: 10px;
+            padding: 18px; /* Reduced padding */
+            margin-bottom: 18px; /* Reduced margin */
+            transition: transform 0.3s;
+            text-align: center;
+        }
+        
+        .facility-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .facility-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 8px; /* Reduced margin */
+            font-size: 1rem; /* Reduced font size */
+        }
+        
+        .service-card {
+            padding: 18px; /* Reduced padding */
+            margin-bottom: 18px; /* Reduced margin */
+            border-left: 4px solid var(--primary-color);
+            background-color: white;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .service-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 8px; /* Reduced margin */
+        }
+        
+        .service-icon {
+            font-size: 2rem; /* Reduced size */
+            color: var(--primary-color);
+            margin-bottom: 12px; /* Reduced margin */
+        }
+        
+        /* Enhanced doctor schedule styles */
+        .doctor-schedule-container {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            border-radius: 15px;
+            padding: 22px; /* Reduced padding */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin-bottom: 25px; /* Reduced margin */
+        }
+        
+        .schedule-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px; /* Reduced margin */
+            flex-wrap: wrap;
+            gap: 12px; /* Reduced gap */
+        }
+        
+        .schedule-title {
+            font-size: 1.6rem; /* Reduced font size */
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 0;
+        }
+        
+        .schedule-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px; /* Reduced gap */
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            font-size: 0.8rem; /* Reduced font size */
+            font-weight: 500;
+        }
+        
+        .legend-color {
+            width: 12px; /* Reduced size */
+            height: 12px;
             border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
+            margin-right: 5px; /* Reduced margin */
         }
-
-        .btn-primary:hover::before {
-            width: 300px;
-            height: 300px;
+        
+        .legend-pediatri { background-color: #1976d2; }
+        .legend-obgyn { background-color: #c2185b; }
+        .legend-surgery { background-color: #388e3c; }
+        .legend-internal { background-color: #f57c00; }
+        
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px; /* Reduced gap */
+            margin-top: 18px; /* Reduced margin */
         }
-
-        /* Form input styles */
-        .form-input {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        
+        .doctor-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border-left: 5px solid;
+            position: relative;
+        }
+        
+        .doctor-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+        }
+        
+        .doctor-card.pediatri {
+            border-left-color: #1976d2;
+        }
+        
+        .doctor-card.obgyn {
+            border-left-color: #c2185b;
+        }
+        
+        .doctor-card.surgery {
+            border-left-color: #388e3c;
+        }
+        
+        .doctor-card.internal {
+            border-left-color: #f57c00;
+        }
+        
+        .doctor-header {
+            padding: 12px 15px; /* Reduced padding */
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .doctor-specialty {
+            display: inline-block;
+            padding: 2px 8px; /* Reduced padding */
+            border-radius: 20px;
+            font-size: 0.75rem; /* Reduced font size */
+            font-weight: 600;
+            margin-bottom: 5px; /* Reduced margin */
+            color: white;
+        }
+        
+        .specialty-pediatri {
+            background-color: #1976d2;
+        }
+        
+        .specialty-obgyn {
+            background-color: #c2185b;
+        }
+        
+        .specialty-surgery {
+            background-color: #388e3c;
+        }
+        
+        .specialty-internal {
+            background-color: #f57c00;
+        }
+        
+        .doctor-name {
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95rem; /* Reduced font size */
+            margin: 0;
+        }
+        
+        .doctor-content {
+            padding: 15px; /* Reduced padding */
+        }
+        
+        .schedule-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .schedule-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 0; /* Reduced padding */
+            border-bottom: 1px solid #f0f0f0;
             transition: all 0.3s ease;
         }
-
-        .form-input:focus {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        
+        .schedule-item:last-child {
+            border-bottom: none;
         }
-
-        /* Status badge */
-        .status-badge {
+        
+        .schedule-item:hover {
+            background-color: rgba(227, 242, 253, 0.3);
+            border-radius: 8px;
+            padding-left: 8px; /* Reduced padding */
+            padding-right: 8px;
+            margin-left: -8px;
+            margin-right: -8px;
+        }
+        
+        .day-badge {
             display: inline-flex;
             align-items: center;
-            padding: 4px 12px;
+            padding: 4px 8px; /* Reduced padding */
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 0.75rem; /* Reduced font size */
+            font-weight: 500;
+            margin-right: 8px; /* Reduced margin */
+            min-width: 90px; /* Reduced width */
+            justify-content: center;
+        }
+        
+        .day-weekday {
+            background-color: var(--info-color);
+            color: white;
+        }
+        
+        .day-saturday {
+            background-color: var(--warning-color);
+            color: white;
+        }
+        
+        .time-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 8px; /* Reduced padding */
+            border-radius: 20px;
+            font-size: 0.75rem; /* Reduced font size */
+            font-weight: 500;
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .schedule-badge i {
+            margin-right: 3px; /* Reduced margin */
+            font-size: 0.8rem; /* Reduced size */
+        }
+        
+        .certificate-container {
+            position: relative;
+            margin: 22px 0; /* Reduced margin */
+        }
+        
+        .certificate-image {
+            width: 100%;
+            max-width: 650px; /* Reduced width */
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .certificate-details {
+            background-color: var(--light-color);
+            border-radius: 10px;
+            padding: 18px; /* Reduced padding */
+            margin-top: 22px; /* Reduced margin */
+        }
+        
+        .certificate-details h4 {
+            color: var(--primary-color);
+            margin-bottom: 12px; /* Reduced margin */
             font-weight: 600;
+            font-size: 1.1rem; /* Reduced font size */
         }
-
-        .status-active {
-            background: rgba(34, 197, 94, 0.2);
-            color: #22c55e;
+        
+        .detail-item {
+            margin-bottom: 10px; /* Reduced margin */
+            padding-bottom: 10px; /* Reduced padding */
+            border-bottom: 1px solid rgba(0,0,0,0.1);
         }
-
-        .status-inactive {
-            background: rgba(239, 68, 68, 0.2);
-            color: #ef4444;
+        
+        .detail-item:last-child {
+            border-bottom: none;
         }
-
-        /* Responsive 18:9 ratio */
-        .container-18-9 {
-            max-width: 100%;
-            padding: 0 1rem;
+        
+        .detail-label {
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 3px; /* Reduced margin */
+            font-size: 0.9rem; /* Reduced font size */
         }
-
+        
+        .detail-value {
+            color: #333;
+            font-size: 0.85rem; /* Reduced font size */
+        }
+        
+        .highlight-box {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 15px; /* Reduced padding */
+            border-radius: 8px;
+            margin: 15px 0; /* Reduced margin */
+        }
+        
+        .highlight-box h5 {
+            font-size: 1rem; /* Reduced font size */
+            margin-bottom: 8px; /* Reduced margin */
+        }
+        
+        .highlight-box ul {
+            font-size: 0.85rem; /* Reduced font size */
+            padding-left: 18px; /* Reduced padding */
+        }
+        
+        .zoom-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            cursor: zoom-in;
+        }
+        
+        .zoom-container:hover .certificate-image {
+            transform: scale(1.03);
+            transition: transform 0.3s ease;
+        }
+        
+        /* Tablet-specific adjustments */
+        h1 {
+            font-size: 1.8rem; /* Reduced font size */
+            margin-bottom: 1rem; /* Reduced margin */
+        }
+        
+        h2 {
+            font-size: 1.5rem; /* Reduced font size */
+            margin-bottom: 0.8rem; /* Reduced margin */
+        }
+        
+        h3 {
+            font-size: 1.2rem; /* Reduced font size */
+        }
+        
+        h4 {
+            font-size: 1.1rem; /* Reduced font size */
+        }
+        
+        h5 {
+            font-size: 1rem; /* Reduced font size */
+        }
+        
+        p {
+            font-size: 0.9rem; /* Reduced font size */
+            line-height: 1.5;
+        }
+        
+        .lead {
+            font-size: 1rem; /* Reduced font size */
+        }
+        
+        .display-4 {
+            font-size: 2.2rem; /* Reduced font size */
+        }
+        
+        .card-body {
+            padding: 1rem; /* Reduced padding */
+        }
+        
+        .card-title {
+            font-size: 1rem; /* Reduced font size */
+            margin-bottom: 0.6rem; /* Reduced margin */
+        }
+        
+        .card-text {
+            font-size: 0.85rem; /* Reduced font size */
+        }
+        
+        .btn {
+            font-size: 0.85rem; /* Reduced font size */
+            padding: 6px 14px; /* Reduced padding */
+        }
+        
+        .alert {
+            font-size: 0.85rem; /* Reduced font size */
+            padding: 10px 14px; /* Reduced padding */
+        }
+        
+        .badge {
+            font-size: 0.7rem; /* Reduced font size */
+        }
+        
+        /* Override all media queries */
+        @media (min-width: 576px) {
+            .container, .container-sm {
+                max-width: 840px !important; /* Reduced from 960px */
+            }
+        }
+        
         @media (min-width: 768px) {
-            .container-18-9 {
-                max-width: 800px;
+            .container, .container-sm, .container-md {
+                max-width: 840px !important; /* Reduced from 960px */
             }
         }
-
-        @media (min-width: 1024px) {
-            .container-18-9 {
-                max-width: 1600px;
+        
+        @media (min-width: 992px) {
+            .container, .container-sm, .container-md, .container-lg {
+                max-width: 840px !important; /* Reduced from 960px */
             }
         }
-
-        /* Google Drive status indicator */
-        .google-drive-status {
-            display: inline-flex;
-            align-items: center;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
+        
+        @media (min-width: 1200px) {
+            .container, .container-sm, .container-md, .container-lg, .container-xl {
+                max-width: 840px !important; /* Reduced from 960px */
+            }
         }
-
-        .google-drive-connected {
-            background: rgba(34, 197, 94, 0.2);
-            color: #22c55e;
-        }
-
-        .google-drive-disconnected {
-            background: rgba(239, 68, 68, 0.2);
-            color: #ef4444;
+        
+        @media (min-width: 1400px) {
+            .container, .container-sm, .container-md, .container-lg, .container-xl, .container-xxl {
+                max-width: 840px !important; /* Reduced from 960px */
+            }
         }
     </style>
 </head>
-<body class="text-white">
-    <!-- Header -->
-    <header class="glass sticky top-0 z-50 fade-in">
-        <div class="container mx-auto px-4 py-4">
-            <div class="flex items-center justify-between">
-                <div>
-                    <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                        RSUD Talaud
-                    </h1>
-                    <p class="text-sm text-gray-400">Manajemen Outsourcing</p>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <div id="googleDriveStatus" class="google-drive-status google-drive-disconnected">
-                        <i class="fas fa-cloud mr-2"></i>
-                        <span>Google Drive: Tersambung</span>
-                    </div>
-                    <button id="connectGoogleDrive" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-all">
-                        <i class="fas fa-link mr-2"></i>Sambungkan Google Drive
+<body>
+    <div class="tablet-container">
+        <!-- New Header with Hamburger Menu -->
+        <header class="header">
+            <div class="header-content">
+                <a class="navbar-brand" href="#">
+                    <i class="bi bi-hospital me-2"></i>
+                    RSUD Kabupaten Kepulauan Talaud
+                </a>
+                
+                <!-- Hamburger Menu -->
+                <div class="hamburger-menu">
+                    <button class="hamburger-btn" id="hamburgerBtn">
+                        <span></span>
+                        <span></span>
+                        <span></span>
                     </button>
-                    <button class="relative p-2 hover:bg-white/10 rounded-lg transition-all">
-                        <i class="fas fa-bell text-xl"></i>
-                        <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
-                    </button>
-                    <button class="flex items-center space-x-2 hover:bg-white/10 rounded-lg px-3 py-2 transition-all">
-                        <img src="https://picsum.photos/seed/admin/40/40" alt="Admin" class="w-8 h-8 rounded-full">
-                        <span class="text-sm">Admin</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="container mx-auto px-4 py-8 container-18-9">
-        <!-- Dashboard Stats -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 fade-in">
-            <div class="glass rounded-xl p-6 card-hover">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center">
-                        <i class="fas fa-shield-alt text-blue-400 text-xl"></i>
-                    </div>
-                    <span class="text-2xl font-bold" id="satpamCount">0</span>
-                </div>
-                <h3 class="text-lg font-semibold mb-1">Satpam</h3>
-                <p class="text-sm text-gray-400">Total Personil</p>
-            </div>
-
-            <div class="glass rounded-xl p-6 card-hover">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center">
-                        <i class="fas fa-car text-green-400 text-xl"></i>
-                    </div>
-                    <span class="text-2xl font-bold" id="sopirCount">0</span>
-                </div>
-                <h3 class="text-lg font-semibold mb-1">Sopir</h3>
-                <p class="text-sm text-gray-400">Total Personil</p>
-            </div>
-
-            <div class="glass rounded-xl p-6 card-hover">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center">
-                        <i class="fas fa-broom text-purple-400 text-xl"></i>
-                    </div>
-                    <span class="text-2xl font-bold" id="kebersihanCount">0</span>
-                </div>
-                <h3 class="text-lg font-semibold mb-1">Kebersihan</h3>
-                <p class="text-sm text-gray-400">Total Personil</p>
-            </div>
-        </div>
-
-        <!-- Tabs -->
-        <div class="glass rounded-xl p-1 mb-6 fade-in">
-            <div class="flex space-x-1">
-                <button class="tab-btn flex-1 py-3 px-6 rounded-lg text-center font-medium transition-all" data-tab="satpam">
-                    <i class="fas fa-shield-alt mr-2"></i>Satpam
-                </button>
-                <button class="tab-btn flex-1 py-3 px-6 rounded-lg text-center font-medium transition-all" data-tab="sopir">
-                    <i class="fas fa-car mr-2"></i>Sopir
-                </button>
-                <button class="tab-btn flex-1 py-3 px-6 rounded-lg text-center font-medium transition-all" data-tab="kebersihan">
-                    <i class="fas fa-broom mr-2"></i>Kebersihan
-                </button>
-            </div>
-            <div class="tab-indicator h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg mt-1"></div>
-        </div>
-
-        <!-- Content Area -->
-        <div class="glass rounded-xl p-6 fade-in">
-            <!-- Search and Actions -->
-            <div class="flex flex-col md:flex-row justify-between items-center mb-6 space-y-4 md:space-y-0">
-                <div class="relative w-full md:w-96">
-                    <input type="text" id="searchInput" placeholder="Cari nama, NIP, atau divisi..." 
-                           class="form-input w-full pl-10 pr-4 py-2 rounded-lg text-white placeholder-gray-400">
-                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                </div>
-                <div class="flex space-x-3">
-                    <button id="exportBtn" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-all">
-                        <i class="fas fa-file-export mr-2"></i>Export
-                    </button>
-                    <button id="addBtn" class="btn-primary px-6 py-2 rounded-lg text-white font-medium transition-all">
-                        <i class="fas fa-plus mr-2"></i>Tambah Data
-                    </button>
-                </div>
-            </div>
-
-            <!-- Table -->
-            <div class="overflow-x-auto">
-                <table class="w-full">
-                    <thead>
-                        <tr class="border-b border-gray-700">
-                            <th class="text-left py-3 px-4">No</th>
-                            <th class="text-left py-3 px-4">Nama</th>
-                            <th class="text-left py-3 px-4">NIP</th>
-                            <th class="text-left py-3 px-4">Divisi</th>
-                            <th class="text-left py-3 px-4">Status</th>
-                            <th class="text-left py-3 px-4">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody id="dataTable">
-                        <!-- Data will be inserted here -->
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Pagination -->
-            <div class="flex justify-center items-center mt-6 space-x-2">
-                <button class="px-3 py-1 rounded-lg hover:bg-white/10 transition-all">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <button class="px-3 py-1 rounded-lg bg-blue-500/20 text-blue-400">1</button>
-                <button class="px-3 py-1 rounded-lg hover:bg-white/10 transition-all">2</button>
-                <button class="px-3 py-1 rounded-lg hover:bg-white/10 transition-all">3</button>
-                <button class="px-3 py-1 rounded-lg hover:bg-white/10 transition-all">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
-        </div>
-    </main>
-
-    <!-- Modal -->
-    <div id="modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
-        <div class="glass rounded-xl p-6 w-full max-w-md modal-enter">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-xl font-bold" id="modalTitle">Tambah Data</h2>
-                <button id="closeModal" class="hover:bg-white/10 rounded-lg p-2 transition-all">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <form id="form">
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Nama</label>
-                        <input type="text" id="nama" required class="form-input w-full px-4 py-2 rounded-lg text-white">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2">NIP</label>
-                        <input type="text" id="nip" required class="form-input w-full px-4 py-2 rounded-lg text-white">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Divisi</label>
-                        <select id="divisi" required class="form-input w-full px-4 py-2 rounded-lg text-white">
-                            <option value="">Pilih Divisi</option>
-                            <option value="Satpam">Satpam</option>
-                            <option value="Sopir">Sopir</option>
-                            <option value="Kebersihan">Kebersihan</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Status</label>
-                        <select id="status" required class="form-input w-full px-4 py-2 rounded-lg text-white">
-                            <option value="Aktif">Aktif</option>
-                            <option value="Tidak Aktif">Tidak Aktif</option>
-                        </select>
+                    
+                    <!-- Dropdown Menu -->
+                    <div class="dropdown-menu" id="dropdownMenu">
+                        <ul>
+                            <li><a href="#" class="active" data-page="beranda"><i class="bi bi-house-door"></i>Beranda</a></li>
+                            <li><a href="#" data-page="profil"><i class="bi bi-building"></i>Profil</a></li>
+                            <li><a href="#" data-page="pelayanan"><i class="bi bi-heart-pulse"></i>Pelayanan</a></li>
+                            <li><a href="#" data-page="ruangan"><i class="bi bi-door-open"></i>Ruangan</a></li>
+                            <li><a href="#" data-page="jadwal"><i class="bi bi-calendar3"></i>Jadwal Spesialis</a></li>
+                            <li><a href="#" data-page="akreditasi"><i class="bi bi-award"></i>Akreditasi</a></li>
+                            <li><a href="#" data-page="komite"><i class="bi bi-people"></i>Komite</a></li>
+                        </ul>
                     </div>
                 </div>
-                <div class="flex space-x-3 mt-6">
-                    <button type="button" id="cancelBtn" class="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-all">
-                        Batal
-                    </button>
-                    <button type="submit" class="flex-1 btn-primary px-4 py-2 rounded-lg text-white font-medium transition-all">
-                        Simpan
-                    </button>
+            </div>
+        </header>
+
+        <!-- Beranda Section -->
+        <section id="beranda" class="page-section active">
+            <div class="hero-section">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <h1 class="display-4 fw-bold mb-4">RSUD Kabupaten Kepulauan Talaud</h1>
+                            <p class="lead mb-4">Melayani dengan Hati untuk Masyarakat Kepulauan Talaud</p>
+                            <p class="mb-4">Rumah Sakit Umum Daerah Kabupaten Kepulauan Talaud berkomitmen menjadi pusat layanan kesehatan terpercaya bagi masyarakat Kepulauan Talaud dengan menyediakan pelayanan medis yang berkualitas dan terjangkau.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <img src="https://z-cdn-media.chatglm.cn/files/5f5a5bd6-c506-4df6-b61f-25bb15104368_rsud%201.jpg?auth_key=1863057081-8bc5ca7e9b80402092602e3916dc4ea5-0-2b50b9630c61b2d48dba91df16320385" alt="RSUD Talaud" class="img-fluid rounded shadow">
+                        </div>
+                    </div>
                 </div>
-            </form>
-        </div>
+            </div>
+            
+            <div class="container">
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h2 class="text-center mb-4">Visi Kami</h2>
+                        <div class="testimonial">
+                            <p class="mb-0 fs-5">"Menjadi Rumah Sakit Yang Unggul dan Terpercaya"</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h2 class="text-center mb-4">Misi Kami</h2>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100">
+                                    <div class="card-body text-center">
+                                        <i class="bi bi-heart-pulse-fill service-icon"></i>
+                                        <h5 class="card-title">Pelayanan Berkualitas</h5>
+                                        <p class="card-text">Menyelenggarakan pelayanan kesehatan bermutu dan terjangkau</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100">
+                                    <div class="card-body text-center">
+                                        <i class="bi bi-people-fill service-icon"></i>
+                                        <h5 class="card-title">Pengelolaan Profesional</h5>
+                                        <p class="card-text">Menyelenggarakan pengelolaan sumber daya rumah sakit secara profesional</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100">
+                                    <div class="card-body text-center">
+                                        <i class="bi bi-mortarboard-fill service-icon"></i>
+                                        <h5 class="card-title">Peningkatan Kompetensi</h5>
+                                        <p class="card-text">Menyelenggarakan peningkatan ilmu dan keterampilan tenaga rumah sakit</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h2 class="text-center mb-4">Fasilitas Unggulan</h2>
+                        <div class="row">
+                            <div class="col-md-3 mb-3">
+                                <div class="facility-card h-100">
+                                    <i class="bi bi-exclamation-triangle-fill facility-icon"></i>
+                                    <h5 class="facility-title">Instalasi Gawat Darurat</h5>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <div class="facility-card h-100">
+                                    <i class="bi bi-virus facility-icon"></i>
+                                    <h5 class="facility-title">Laboratorium</h5>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <div class="facility-card h-100">
+                                    <i class="bi bi-x-ray facility-icon"></i>
+                                    <h5 class="facility-title">Radiologi</h5>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <div class="facility-card h-100">
+                                    <i class="bi bi-hospital facility-icon"></i>
+                                    <h5 class="facility-title">Ruang Rawat Inap</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profil Section -->
+        <section id="profil" class="page-section">
+            <div class="container py-4">
+                <h1 class="text-center mb-4">Profil RSUD Kabupaten Kepulauan Talaud</h1>
+                
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h2>Sejarah Singkat</h2>
+                        <p>RSUD Kabupaten Kepulauan Talaud merupakan fasilitas kesehatan milik pemerintah daerah yang berlokasi di Kepulauan Talaud, Sulawesi Utara. Sejak didirikan, rumah sakit ini terus berkomitmen untuk memberikan pelayanan kesehatan terbaik bagi masyarakat Kepulauan Talaud dan sekitarnya.</p>
+                        <p>Dengan dukungan tenaga medis profesional dan fasilitas yang memadai, RSUD Talaud terus berkembang menjadi rumah sakit rujukan di wilayah Kepulauan Talaud.</p>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="text-center mb-4">Struktur Organisasi</h2>
+                        <div class="org-chart">
+                            <!-- Direktur -->
+                            <div class="org-box director mx-auto">
+                                <h5>Direktur</h5>
+                                <p>Dr. dr. Jawali J. Ektivianus, M.Kes, FIHFAA</p>
+                                <p class="small mb-0">NIP. 19721001 200012 1 004</p>
+                            </div>
+                            <div class="org-line"></div>
+                            
+                            <!-- Plt. Kepala Bagian Tata Usaha -->
+                            <div class="org-box plt mx-auto">
+                                <h5>Plt. Kepala Bagian Tata Usaha</h5>
+                                <p>Owsan Lakumani Tinenta, S.Kep</p>
+                                <p class="small mb-0">NIP. 19791014 200312 1 003</p>
+                            </div>
+                            <div class="org-line"></div>
+                            
+                            <!-- Kasubag -->
+                            <div class="org-branch">
+                                <div class="org-branch-item">
+                                    <div class="org-box kasubag">
+                                        <h6>Kasubag. Perencanaan, Evaluasi & Pelaporan</h6>
+                                        <p>Fennyce Tulis, SM</p>
+                                        <p class="small mb-0">NIP. 19780215 200312 2 007</p>
+                                    </div>
+                                </div>
+                                <div class="org-branch-item">
+                                    <div class="org-box kasubag">
+                                        <h6>Kasubag. Kepegawaian, Hukum & Umum</h6>
+                                        <p>Mervie J. Marlissa, SKM</p>
+                                        <p class="small mb-0">NIP. 19840419 200903 2 005</p>
+                                    </div>
+                                </div>
+                                <div class="org-branch-item">
+                                    <div class="org-box kasubag">
+                                        <h6>Kasubag. Keuangan</h6>
+                                        <p>Uni Lolopadang, S.Mn</p>
+                                        <p class="small mb-0">NIP. 19730616 200501 2 011</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="org-horizontal-line"></div>
+                            <div class="org-vertical-line"></div>
+                            
+                            <!-- Kepala Bidang -->
+                            <div class="org-branch">
+                                <div class="org-branch-item">
+                                    <div class="org-box kabid">
+                                        <h6>Kabid. Pelayanan Medik</h6>
+                                        <p>Elisrah W. Sedu, S.Kep. Ns</p>
+                                        <p class="small mb-0">NIP. 19700914 199503 2 006</p>
+                                    </div>
+                                    <div class="org-line"></div>
+                                    <div class="org-box kasie">
+                                        <h6>Kasie. SDM & Operasional Pelayanan Medik</h6>
+                                        <p>Inn Pratiwi Ulaen, S.A.P</p>
+                                        <p class="small mb-0">NIP. 19880405 201001 2 003</p>
+                                    </div>
+                                    <div class="org-line"></div>
+                                    <div class="org-box kasie">
+                                        <h6>Kasie. Sapras, Alat, Pelaporan & Kendali Mutu</h6>
+                                        <p>Imela O. Gahiwu, S.Kep, M.Kes</p>
+                                        <p class="small mb-0">NIP. 19781230 200212 2 004</p>
+                                    </div>
+                                    <div class="org-line"></div>
+                                    <div class="org-sub-branch">
+                                        <div class="org-sub-item">
+                                            <div class="org-box small">
+                                                <p class="mb-0">Instalasi Gawat Darurat</p>
+                                            </div>
+                                        </div>
+                                        <div class="org-sub-item">
+                                            <div class="org-box small">
+                                                <p class="mb-0">Instalasi Rawat Jalan</p>
+                                            </div>
+                                        </div>
+                                        <div class="org-sub-item">
+                                            <div class="org-box small">
+                                                <p class="mb-0">Instalasi Bedah Sentral</p>
+                                            </div>
+                                        </div>
+                                        <div class="org-sub-item">
+                                            <div class="org-box small">
+                                                <p class="mb-0">Instalasi Rawat Inap</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="org-branch-item">
+                                    <div class="org-box kabid">
+                                        <h6>Kabid. Penunjang Medik</h6>
+                                        <p>Sonny H. Larenggam, SKM</p>
+                                        <p class="small mb-0">NIP. 19720928 199803 1 006</p>
+                                    </div>
+                                    <div class="org-line"></div>
+                                    <div class="org-box kasie">
+                                        <h6>Kasie. Penunjang Medik</h6>
+                                        <p>Sulistia Sahambangung, SKM</p>
+                                        <p class="small mb-0">NIP. 19850403 200903 2 002</p>
+                                    </div>
+                                    <div class="org-line"></div>
+                                    <div class="org-sub-branch">
+                                        <div class="org-sub-item">
+                                            <div class="org-box small">
+                                                <p class="mb-0">Instalasi CSSD</p>
+                                            </div>
+                                        </div>
+                                        <div class="org-sub-item">
+                                            <div class="org-box small">
+                                                <p class="mb-0">Instalasi Laboratorium</p>
+                                            </div>
+                                        </div>
+                                        <div class="org-sub-item">
+                                            <div class="org-box small">
+                                                <p class="mb-0">Instalasi Gizi</p>
+                                            </div>
+                                        </div>
+                                        <div class="org-sub-item">
+                                            <div class="org-box small">
+                                                <p class="mb-0">Instalasi Rekam Medik</p>
+                                            </div>
+                                        </div>
+                                        <div class="org-sub-item">
+                                            <div class="org-box small">
+                                                <p class="mb-0">Instalasi Farmasi</p>
+                                            </div>
+                                        </div>
+                                        <div class="org-sub-item">
+                                            <div class="org-box small">
+                                                <p class="mb-0">Instalasi Radiologi</p>
+                                            </div>
+                                        </div>
+                                        <div class="org-sub-item">
+                                            <div class="org-box small">
+                                                <p class="mb-0">Instalasi Fisioterapi</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="org-line"></div>
+                                    <div class="org-box kasie">
+                                        <h6>Kasie. Penunjang Non Medik</h6>
+                                        <p>Hermanus J. Gagola, S.ST</p>
+                                        <p class="small mb-0">NIP. 19700128 199203 2 009</p>
+                                    </div>
+                                    <div class="org-line"></div>
+                                    <div class="org-sub-branch">
+                                        <div class="org-sub-item">
+                                            <div class="org-box small">
+                                                <p class="mb-0">Binatu</p>
+                                            </div>
+                                        </div>
+                                        <div class="org-sub-item">
+                                            <div class="org-box small">
+                                                <p class="mb-0">IPSRS</p>
+                                            </div>
+                                        </div>
+                                        <div class="org-sub-item">
+                                            <div class="org-box small">
+                                                <p class="mb-0">Pemulasaran Jenazah</p>
+                                            </div>
+                                        </div>
+                                        <div class="org-sub-item">
+                                            <div class="org-box small">
+                                                <p class="mb-0">Ambulance</p>
+                                            </div>
+                                        </div>
+                                        <div class="org-sub-item">
+                                            <div class="org-box small">
+                                                <p class="mb-0">IPAL</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="org-branch-item">
+                                    <div class="org-box kabid">
+                                        <h6>Kabid. Keperawatan & Kebidanan</h6>
+                                        <p>Ns. Lisye Gamis, S.kep</p>
+                                        <p class="small mb-0">NIP. 19800503 200501 2 014</p>
+                                    </div>
+                                    <div class="org-line"></div>
+                                    <div class="org-box kasie">
+                                        <h6>Kasie. SDM & Operasional Keperawatan</h6>
+                                        <p>Jayatri A. Aimbu, A.Md.Kep</p>
+                                        <p class="small mb-0">NIP. 19840130 201001 2 005</p>
+                                    </div>
+                                    <div class="org-line"></div>
+                                    <div class="org-box kasie">
+                                        <h6>Kasie. Sapras, Alat, Pelaporan & Kendali Mutu</h6>
+                                        <p>Rafles Maitum, S.Kep</p>
+                                        <p class="small mb-0">NIP. 19860822 201001 1 005</p>
+                                    </div>
+                                    <div class="org-line"></div>
+                                    <div class="org-sub-branch">
+                                        <div class="org-sub-item">
+                                            <div class="org-box small">
+                                                <p class="mb-0">Instalasi Gawat Darurat</p>
+                                            </div>
+                                        </div>
+                                        <div class="org-sub-item">
+                                            <div class="org-box small">
+                                                <p class="mb-0">Instalasi Rawat Jalan</p>
+                                            </div>
+                                        </div>
+                                        <div class="org-sub-item">
+                                            <div class="org-box small">
+                                                <p class="mb-0">Instalasi Bedah Sentral</p>
+                                            </div>
+                                        </div>
+                                        <div class="org-sub-item">
+                                            <div class="org-box small">
+                                                <p class="mb-0">Instalasi Rawat Inap</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="org-horizontal-line"></div>
+                            <div class="org-vertical-line"></div>
+                            
+                            <!-- Kelompok Jabatan Fungsional -->
+                            <div class="org-box mx-auto">
+                                <h5>Kelompok Jabatan Fungsional</h5>
+                                <div class="org-sub-branch mt-3">
+                                    <div class="org-sub-item">
+                                        <div class="org-box small">
+                                            <p class="mb-0">SPI</p>
+                                        </div>
+                                    </div>
+                                    <div class="org-sub-item">
+                                        <div class="org-box small">
+                                            <p class="mb-0">DEWAS</p>
+                                        </div>
+                                    </div>
+                                    <div class="org-sub-item">
+                                        <div class="org-box small">
+                                            <p class="mb-0">KOMITE</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pelayanan Section -->
+        <section id="pelayanan" class="page-section">
+            <div class="container py-4">
+                <h1 class="text-center mb-4">Pelayanan RSUD Kabupaten Kepulauan Talaud</h1>
+                
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="service-card h-100">
+                            <i class="bi bi-exclamation-triangle-fill service-icon"></i>
+                            <h5 class="service-title">Pelayanan IGD 24 Jam</h5>
+                            <p>Instalasi Gawat Darurat kami siap melayani pasien darurat selama 24 jam dengan tenaga medis yang terlatih dan peralatan medis lengkap.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="service-card h-100">
+                            <i class="bi bi-hospital service-icon"></i>
+                            <h5 class="service-title">Pelayanan Rawat Jalan dan Rawat Inap</h5>
+                            <p>Kami menyediakan pelayanan rawat jalan untuk konsultasi medis dan rawat inap dengan berbagai kelas kamar yang nyaman.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="service-card h-100">
+                            <i class="bi bi-virus service-icon"></i>
+                            <h5 class="service-title">Pelayanan Laboratorium</h5>
+                            <p>Laboratorium kami dilengkapi dengan peralatan modern untuk berbagai pemeriksaan darah, urine, dan lainnya dengan hasil yang akurat.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="service-card h-100">
+                            <i class="bi bi-x-ray service-icon"></i>
+                            <h5 class="service-title">Pelayanan Radiologi</h5>
+                            <p>Pelayanan radiologi dengan teknologi canggih untuk pemeriksaan X-ray, USG, dan CT scan untuk diagnosa yang tepat.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="service-card h-100">
+                            <i class="bi bi-person-walking service-icon"></i>
+                            <h5 class="service-title">Pelayanan Fisioterapi</h5>
+                            <p>Tim fisioterapi kami siap membantu pemulihan pasien dengan berbagai terapi fisik yang disesuaikan dengan kondisi pasien.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="service-card h-100">
+                            <i class="bi bi-capsule service-icon"></i>
+                            <h5 class="service-title">Pelayanan Farmasi</h5>
+                            <p>Farmasi kami menyediakan berbagai obat-obatan berkualitas dengan konsultasi dari apoteker profesional.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="service-card h-100">
+                            <i class="bi bi-egg-fried service-icon"></i>
+                            <h5 class="service-title">Pelayanan Gizi</h5>
+                            <p>Konsultasi gizi dan menu makanan sehat untuk pasien dengan penyesuaian kebutuhan nutrisi sesuai kondisi medis.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="service-card h-100">
+                            <i class="bi bi-ambulance service-icon"></i>
+                            <h5 class="service-title">Pelayanan Ambulance</h5>
+                            <p>Layanan ambulance 24 jam untuk transportasi medis darurat dengan peralatan lengkap dan tenaga medis terlatih.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ruangan Section -->
+        <section id="ruangan" class="page-section">
+            <div class="container py-4">
+                <h1 class="text-center mb-4">Ruangan Rumah Sakit</h1>
+                
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <div class="card room-card h-100">
+                            <i class="bi bi-exclamation-triangle-fill room-icon"></i>
+                            <h5>IGD</h5>
+                            <p>Instalasi Gawat Darurat</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card room-card h-100">
+                            <i class="bi bi-heart-pulse-fill room-icon"></i>
+                            <h5>ICU</h5>
+                            <p>Intensive Care Unit</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card room-card h-100">
+                            <i class="bi bi-person-hearts room-icon"></i>
+                            <h5>Ruang Bersalin</h5>
+                            <p>Fasilitas persalinan modern</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card room-card h-100">
+                            <i class="bi bi-emoji-smile-fill room-icon"></i>
+                            <h5>Ruang Bayi</h5>
+                            <p>Perawatan khusus bayi</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card room-card h-100">
+                            <i class="bi bi-emoji-smile-fill room-icon"></i>
+                            <h5>Ruang Anak</h5>
+                            <p>Perawatan khusus anak-anak</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card room-card h-100">
+                            <i class="bi bi-bandaid-fill room-icon"></i>
+                            <h5>Ruang Bedah</h5>
+                            <p>Ruang operasi modern</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card room-card h-100">
+                            <i class="bi bi-hospital room-icon"></i>
+                            <h5>Ruang Rawat Inap Kelas I</h5>
+                            <p>Kamar dengan fasilitas premium</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card room-card h-100">
+                            <i class="bi bi-hospital room-icon"></i>
+                            <h5>Ruang Rawat Inap Kelas II</h5>
+                            <p>Kamar dengan fasilitas standar</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card room-card h-100">
+                            <i class="bi bi-hospital room-icon"></i>
+                            <h5>Ruang Rawat Inap Kelas III</h5>
+                            <p>Kamar ekonomis dengan fasilitas dasar</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card room-card h-100">
+                            <i class="bi bi-shield-exclamation room-icon"></i>
+                            <h5>Ruang Isolasi</h5>
+                            <p>Ruang khusus pasien infeksius</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Jadwal Spesialis Section -->
+        <section id="jadwal" class="page-section">
+            <div class="container py-4">
+                <div class="doctor-schedule-container">
+                    <div class="schedule-header">
+                        <h2 class="schedule-title">Jadwal Dokter Spesialis</h2>
+                        <div class="schedule-legend">
+                            <div class="legend-item">
+                                <div class="legend-color legend-pediatri"></div>
+                                <span>Anak</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color legend-obgyn"></div>
+                                <span>Kandungan</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color legend-surgery"></div>
+                                <span>Bedah</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color legend-internal"></div>
+                                <span>Penyakit Dalam</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="schedule-grid">
+                        <!-- Spesialis Anak -->
+                        <div class="doctor-card pediatri">
+                            <div class="doctor-header">
+                                <span class="doctor-specialty specialty-pediatri">Spesialis Anak</span>
+                                <h3 class="doctor-name">Hilda A. Tasiringan, Sp.A</h3>
+                            </div>
+                            <div class="doctor-content">
+                                <ul class="schedule-list">
+                                    <li class="schedule-item">
+                                        <span class="day-badge day-weekday">
+                                            <i class="bi bi-calendar-week"></i>Senin-Jumat
+                                        </span>
+                                        <span class="time-badge">
+                                            <i class="bi bi-clock"></i>08.00-12.00
+                                        </span>
+                                    </li>
+                                    <li class="schedule-item">
+                                        <span class="day-badge day-saturday">
+                                            <i class="bi bi-calendar-week"></i>Sabtu
+                                        </span>
+                                        <span class="time-badge">
+                                            <i class="bi bi-clock"></i>13.00-17.00
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Spesialis Kandungan -->
+                        <div class="doctor-card obgyn">
+                            <div class="doctor-header">
+                                <span class="doctor-specialty specialty-obgyn">Spesialis Kandungan</span>
+                                <h3 class="doctor-name">dr. Rita M. Peginusa, Sp.Og(K)</h3>
+                            </div>
+                            <div class="doctor-content">
+                                <ul class="schedule-list">
+                                    <li class="schedule-item">
+                                        <span class="day-badge day-weekday">
+                                            <i class="bi bi-calendar-week"></i>Senin-Jumat
+                                        </span>
+                                        <span class="time-badge">
+                                            <i class="bi bi-clock"></i>08.00-12.00
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Spesialis Bedah 1 -->
+                        <div class="doctor-card surgery">
+                            <div class="doctor-header">
+                                <span class="doctor-specialty specialty-surgery">Spesialis Bedah</span>
+                                <h3 class="doctor-name">dr. Stianila W. Sedu, MPH, Sp.B</h3>
+                            </div>
+                            <div class="doctor-content">
+                                <ul class="schedule-list">
+                                    <li class="schedule-item">
+                                        <span class="day-badge day-weekday">
+                                            <i class="bi bi-calendar-week"></i>Senin-Kamis
+                                        </span>
+                                        <span class="time-badge">
+                                            <i class="bi bi-clock"></i>08.00-10.00
+                                        </span>
+                                    </li>
+                                    <li class="schedule-item">
+                                        <span class="day-badge day-saturday">
+                                            <i class="bi bi-calendar-week"></i>Jumat
+                                        </span>
+                                        <span class="time-badge">
+                                            <i class="bi bi-clock"></i>13.00-17.00
+                                        </span>
+                                    </li>
+                                    <li class="schedule-item">
+                                        <span class="day-badge day-saturday">
+                                            <i class="bi bi-calendar-week"></i>Sabtu
+                                        </span>
+                                        <span class="time-badge">
+                                            <i class="bi bi-clock"></i>08.00-10.00
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Spesialis Bedah 2 -->
+                        <div class="doctor-card surgery">
+                            <div class="doctor-header">
+                                <span class="doctor-specialty specialty-surgery">Spesialis Bedah</span>
+                                <h3 class="doctor-name">dr. Yonathan N. Lukas, Sp.B</h3>
+                            </div>
+                            <div class="doctor-content">
+                                <ul class="schedule-list">
+                                    <li class="schedule-item">
+                                        <span class="day-badge day-weekday">
+                                            <i class="bi bi-calendar-week"></i>Senin-Kamis
+                                        </span>
+                                        <span class="time-badge">
+                                            <i class="bi bi-clock"></i>10.00-12.00
+                                        </span>
+                                    </li>
+                                    <li class="schedule-item">
+                                        <span class="day-badge day-saturday">
+                                            <i class="bi bi-calendar-week"></i>Jumat
+                                        </span>
+                                        <span class="time-badge">
+                                            <i class="bi bi-clock"></i>08.00-12.00
+                                        </span>
+                                    </li>
+                                    <li class="schedule-item">
+                                        <span class="day-badge day-saturday">
+                                            <i class="bi bi-calendar-week"></i>Sabtu
+                                        </span>
+                                        <span class="time-badge">
+                                            <i class="bi bi-clock"></i>10.00-12.00
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Spesialis Penyakit Dalam -->
+                        <div class="doctor-card internal">
+                            <div class="doctor-header">
+                                <span class="doctor-specialty specialty-internal">Spesialis Penyakit Dalam</span>
+                                <h3 class="doctor-name">dr. Ferdinan Goutama, Sp.PD</h3>
+                            </div>
+                            <div class="doctor-content">
+                                <ul class="schedule-list">
+                                    <li class="schedule-item">
+                                        <span class="day-badge day-weekday">
+                                            <i class="bi bi-calendar-week"></i>Senin-Jumat
+                                        </span>
+                                        <span class="time-badge">
+                                            <i class="bi bi-clock"></i>08.00-12.00
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info mt-3">
+                        <i class="bi bi-info-circle-fill me-2"></i>
+                        <strong>Informasi:</strong> Jadwal dapat berubah sewaktu-waktu. Silakan hubungi pihak rumah sakit untuk konfirmasi jadwal terkini.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Akreditasi Section -->
+        <section id="akreditasi" class="page-section">
+            <div class="container py-4">
+                <h1 class="text-center mb-4">Akreditasi Rumah Sakit</h1>
+                
+                <div class="row justify-content-center mb-4">
+                    <div class="col-md-8 text-center">
+                        <div class="card shadow-lg">
+                            <div class="card-body p-4">
+                                <h2 class="card-title mb-3">RSUD Talaud Terakreditasi Tingkat Utama</h2>
+                                <div class="mb-3">
+                                    <i class="bi bi-star-fill accreditation-star"></i>
+                                    <i class="bi bi-star-fill accreditation-star"></i>
+                                    <i class="bi bi-star-fill accreditation-star"></i>
+                                    <i class="bi bi-star-fill accreditation-star"></i>
+                                </div>
+                                <p class="card-text fs-5">RSUD Kabupaten Kepulauan Talaud telah berhasil meraih predikat Akreditasi Tingkat Utama dari Komite Akreditasi Rumah Sakit (KARS). Pengakuan ini membuktikan komitmen kami dalam memberikan pelayanan kesehatan berkualitas tinggi yang sesuai standar nasional.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sertifikat Akreditasi -->
+                <div class="certificate-container">
+                    <h2 class="text-center mb-3">Sertifikat Akreditasi</h2>
+                    <div class="zoom-container">
+                        <img src="https://z-cdn-media.chatglm.cn/files/cd4bb61b-0da4-4d3f-8b4b-87c68605a498_Sertifikat%20Akreditasi%20RS%20Umum%20Daerah%20Talaud.jpg?auth_key=1863055645-e96c6ec4170d4387910959e9eecd82de-0-540e35917eb749ac50570182985ff478" alt="Sertifikat Akreditasi RSUD Talaud" class="certificate-image">
+                    </div>
+                    
+                    <!-- Penjelasan Data Sertifikat -->
+                    <div class="certificate-details">
+                        <h4><i class="bi bi-info-circle-fill me-2"></i>Detail Informasi Sertifikat Akreditasi</h4>
+                        
+                        <div class="detail-item">
+                            <div class="detail-label">Nama Sertifikat</div>
+                            <div class="detail-value">SERTIFIKAT AKREDITASI RUMAH SAKIT</div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <div class="detail-label">Nomor Sertifikat</div>
+                            <div class="detail-value">KARS - SERT/1471/IV/2024</div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <div class="detail-label">Penerima Sertifikat</div>
+                            <div class="detail-value">RS Umum Daerah Talaud</div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <div class="detail-label">Lokasi Rumah Sakit</div>
+                            <div class="detail-value">Kabupaten Kepulauan Talaud, Provinsi Sulawesi Utara, Kecamatan Melonguane</div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <div class="detail-label">Predikat Akreditasi</div>
+                            <div class="detail-value">
+                                <span class="badge bg-success fs-6 p-2">TINGKAT UTAMA</span>
+                                <p class="mt-2 mb-0">Tingkat Utama adalah predikat tertinggi dalam sistem akreditasi rumah sakit di Indonesia, menunjukkan bahwa RSUD Talaud telah memenuhi semua standar pelayanan kesehatan dengan kualitas terbaik.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <div class="detail-label">Masa Berlaku</div>
+                            <div class="detail-value">
+                                <i class="bi bi-calendar-check me-2"></i>
+                                <strong>18 April 2024 - 18 Maret 2028</strong>
+                                <p class="mt-2 mb-0">Sertifikat ini berlaku selama 4 tahun, menunjukkan kepercayaan penuh dari KARS terhadap kemampuan RSUD Talaud dalam mempertahankan kualitas pelayanan.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <div class="detail-label">Penerbit</div>
+                            <div class="detail-value">
+                                <ul class="list-unstyled mb-0">
+                                    <li><i class="bi bi-shield-check me-2"></i>Komite Akreditasi Rumah Sakit (KARS)</li>
+                                    <li><i class="bi bi-building me-2"></i>Kementerian Kesehatan Republik Indonesia</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <div class="detail-label">Tanggal Penerbitan</div>
+                            <div class="detail-value">
+                                <i class="bi bi-calendar-event me-2"></i>
+                                <strong>18 April 2024</strong>
+                                <p class="mt-2 mb-0">Diterbitkan di Jakarta, Indonesia</p>
+                            </div>
+                        </div>
+                        
+                        <div class="highlight-box">
+                            <h5 class="mb-3"><i class="bi bi-award-fill me-2"></i>Pentingnya Akreditasi Tingkat Utama</h5>
+                            <p class="mb-2">Akreditasi Tingkat Utama yang diraih RSUD Talaud menunjukkan:</p>
+                            <ul class="mb-0">
+                                <li>Pelayanan kesehatan yang memenuhi standar nasional tertinggi</li>
+                                <li>Keselamatan pasien menjadi prioritas utama</li>
+                                <li>Tenaga medis profesional dan kompeten</li>
+                                <li>Fasilitas dan infrastruktur memadai</li>
+                                <li>Sistem manajemen mutu yang berkelanjutan</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="bi bi-award-fill text-primary me-2"></i>Tentang Akreditasi</h5>
+                                <p class="card-text">Akreditasi adalah pengakuan formal yang diberikan oleh lembaga eksternal yang berwenang bahwa suatu rumah sakit telah memenuhi standar pelayanan yang ditetapkan. Proses ini melibatkan evaluasi komprehensif terhadap berbagai aspek pelayanan rumah sakit.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="bi bi-graph-up-arrow text-primary me-2"></i>Manfaat Akreditasi</h5>
+                                <p class="card-text">Akreditasi Tingkat Utama memberikan jaminan kepada masyarakat bahwa RSUD Talaud menyediakan pelayanan yang aman, berkualitas, dan berstandar nasional. Ini juga mendorong kami untuk terus melakukan peningkatan mutu pelayanan secara berkelanjutan.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="bi bi-trophy-fill text-primary me-2"></i>Pencapaian Kami</h5>
+                                <p class="card-text">RSUD Talaud telah melalui proses penilaian yang ketat untuk meraih predikat Akreditasi Tingkat Utama. Pencapaian ini merupakan hasil dari kerja keras seluruh tim medis dan non-medis yang berdedikasi untuk memberikan pelayanan terbaik bagi masyarakat Kepulauan Talaud.</p>
+                                <p class="card-text">Kami akan terus berkomitmen untuk mempertahankan dan meningkatkan kualitas pelayanan sesuai standar akreditasi yang berlaku, demi keselamatan dan kepuasan pasien.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Komite Section -->
+        <section id="komite" class="page-section">
+            <div class="container py-4">
+                <h1 class="text-center mb-4">Komite Rumah Sakit</h1>
+                
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="card committee-card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Komite Medik</h5>
+                                <p class="card-text">Komite Medik bertanggung jawab atas pengembangan standar praktik medis, penilaian kualitas pelayanan medis, dan peningkatan kompetensi profesional tenaga medis di RSUD Talaud.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card committee-card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Komite Keperawatan</h5>
+                                <p class="card-text">Komite Keperawatan berfungsi untuk mengembangkan praktik keperawatan yang berstandar, meningkatkan kualitas asuhan keperawatan, dan memastikan keselamatan pasien dalam asuhan keperawatan.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card committee-card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Komite Mutu dan Keselamatan Pasien</h5>
+                                <p class="card-text">Komite ini fokus pada peningkatan mutu pelayanan dan keselamatan pasien melalui identifikasi risiko, pelaporan insiden, dan implementasi program keselamatan pasien di rumah sakit.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card committee-card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Komite Etik dan Hukum</h5>
+                                <p class="card-text">Komite Etik dan Hukum bertugas untuk memberikan panduan etika profesionalisme medis, menangani masalah hukum, dan memastikan praktik medis sesuai dengan standar etika dan regulasi yang berlaku.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card committee-card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Komite PPI (Pencegahan dan Pengendalian Infeksi)</h5>
+                                <p class="card-text">Komite PPI bertanggung jawab atas program pencegahan dan pengendalian infeksi di rumah sakit, meliputi surveilans infeksi, edukasi, dan implementasi praktik hygiene yang efektif.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card committee-card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Komite Farmasi dan Terapi (KFT)</h5>
+                                <p class="card-text">Komite Farmasi dan Terapi mengawasi penggunaan obat yang rasional, mengevaluasi terapi obat, dan memastikan keamanan pasien dalam penggunaan obat di RSUD Talaud.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card committee-card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Komite Rekam Medis / Komite Informasi Kesehatan</h5>
+                                <p class="card-text">Komite ini bertanggung jawab atas pengelolaan rekam medis yang akurat, kerahasiaan data pasien, dan pengembangan sistem informasi kesehatan di rumah sakit.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card committee-card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Komite Kesehatan dan Keselamatan Kerja Rumah Sakit (K3RS)</h5>
+                                <p class="card-text">Komite K3RS memastikan lingkungan kerja yang aman dan sehat bagi seluruh karyawan rumah sakit, serta melaksanakan program pencegahan kecelakaan kerja.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>RSUD Kabupaten Kepulauan Talaud</h5>
+                        <p>Rumah Sakit Umum Daerah Kabupaten Kepulauan Talaud berkomitmen memberikan pelayanan kesehatan terbaik bagi masyarakat.</p>
+                        <p><i class="bi bi-geo-alt-fill me-2"></i>Jl. Raya Mala-Melonguane, Talaud-Sulut</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <h5>Menu Cepat</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="#" class="text-white-50 text-decoration-none" data-page="beranda">Beranda</a></li>
+                            <li><a href="#" class="text-white-50 text-decoration-none" data-page="profil">Profil</a></li>
+                            <li><a href="#" class="text-white-50 text-decoration-none" data-page="pelayanan">Pelayanan</a></li>
+                            <li><a href="#" class="text-white-50 text-decoration-none" data-page="ruangan">Ruangan</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <hr class="my-3 bg-white-50">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <p class="mb-0">&copy; 2023 RSUD Kabupaten Kepulauan Talaud. Hak Cipta Dilindungi.</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
 
-    <!-- Success Toast -->
-    <div id="toast" class="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg hidden transform translate-y-full transition-transform">
-        <i class="fas fa-check-circle mr-2"></i>
-        <span id="toastMessage">Berhasil!</span>
-    </div>
-
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
     <script>
-        // Google Drive API Configuration
-        const CLIENT_ID = 'YOUR_CLIENT_ID'; // Ganti dengan Client ID Anda
-        const API_KEY = 'YOUR_API_KEY'; // Ganti dengan API Key Anda
-        const SCOPES = 'https://www.googleapis.com/auth/drive.file';
-        const FOLDER_ID = '1zWtn8b9lqhnuyy_Tk8tKRhaJ9m-hUE2R'; // Folder ID dari URL yang Anda berikan
-        const FILE_NAME = 'RSUD_Talaud_Data.xlsx';
-        
-        let gapi = null;
-        let googleDriveConnected = false;
-        
-        // Data storage
-        let data = {
-            satpam: [
-                { id: 1, nama: 'Ahmad Fauzi', nip: '198001012019011001', status: 'Aktif' },
-                { id: 2, nama: 'Budi Santoso', nip: '198502022020022002', status: 'Aktif' },
-                { id: 3, nama: 'Cahyono', nip: '199003032021033003', status: 'Tidak Aktif' }
-            ],
-            sopir: [
-                { id: 4, nama: 'Dedi Pratama', nip: '198104042022044004', status: 'Aktif' },
-                { id: 5, nama: 'Eko Saputra', nip: '198205052023055005', status: 'Aktif' }
-            ],
-            kebersihan: [
-                { id: 6, nama: 'Fina Sari', nip: '198306062024066006', status: 'Aktif' },
-                { id: 7, nama: 'Gita Wulandari', nip: '198407072025077007', status: 'Aktif' },
-                { id: 8, nama: 'Hendra Wijaya', nip: '198508082026088008', status: 'Tidak Aktif' }
-            ]
-        };
-
-        let currentTab = 'satpam';
-        let editingId = null;
-
-        // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            renderTable();
-            updateCounts();
-            setupEventListeners();
-            setupTabs();
-            initGoogleDrive();
-        });
-
-        // Initialize Google Drive API
-        function initGoogleDrive() {
-            gapi.load('client:auth2', () => {
-                gapi.client.init({
-                    apiKey: API_KEY,
-                    clientId: CLIENT_ID,
-                    discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
-                    scope: SCOPES
-                }).then(() => {
-                    // Check if user is already signed in
-                    const authInstance = gapi.auth2.getAuthInstance();
-                    const isSignedIn = authInstance.isSignedIn.get();
+            // Hamburger menu functionality
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const dropdownMenu = document.getElementById('dropdownMenu');
+            
+            hamburgerBtn.addEventListener('click', function() {
+                this.classList.toggle('active');
+                dropdownMenu.classList.toggle('show');
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!hamburgerBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                    hamburgerBtn.classList.remove('active');
+                    dropdownMenu.classList.remove('show');
+                }
+            });
+            
+            // Get all navigation links
+            const navLinks = document.querySelectorAll('.dropdown-menu a[data-page], .footer a[data-page]');
+            
+            // Add click event to each navigation link
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
                     
-                    if (isSignedIn) {
-                        googleDriveConnected = true;
-                        updateGoogleDriveStatus();
+                    // Get target page
+                    const targetPage = this.getAttribute('data-page');
+                    
+                    // Hide all sections
+                    const sections = document.querySelectorAll('.page-section');
+                    sections.forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    
+                    // Show target section
+                    const targetSection = document.getElementById(targetPage);
+                    if (targetSection) {
+                        targetSection.classList.add('active');
                     }
-                });
-            });
-        }
-
-        // Update Google Drive connection status
-        function updateGoogleDriveStatus() {
-            const statusElement = document.getElementById('googleDriveStatus');
-            const connectButton = document.getElementById('connectGoogleDrive');
-            
-            if (googleDriveConnected) {
-                statusElement.className = 'google-drive-status google-drive-connected';
-                statusElement.innerHTML = '<i class="fas fa-check-circle mr-2"></i><span>Google Drive: Tersambung</span>';
-                connectButton.style.display = 'none';
-            } else {
-                statusElement.className = 'google-drive-status google-drive-disconnected';
-                statusElement.innerHTML = '<i class="fas fa-exclamation-circle mr-2"></i><span>Google Drive: Belum Tersambung</span>';
-                connectButton.style.display = 'inline-block';
-            }
-        }
-
-        // Setup tabs
-        function setupTabs() {
-            const tabs = document.querySelectorAll('.tab-btn');
-            const indicator = document.querySelector('.tab-indicator');
-            
-            tabs.forEach((tab, index) => {
-                tab.addEventListener('click', function() {
-                    currentTab = this.dataset.tab;
-                    updateActiveTab();
-                    renderTable();
-                });
-            });
-
-            updateActiveTab();
-        }
-
-        function updateActiveTab() {
-            const tabs = document.querySelectorAll('.tab-btn');
-            const indicator = document.querySelector('.tab-indicator');
-            
-            tabs.forEach(tab => {
-                tab.classList.remove('bg-gradient-to-r', 'from-blue-500', 'to-purple-500', 'text-white');
-                tab.classList.add('hover:bg-white/10');
-            });
-
-            const activeTab = document.querySelector(`[data-tab="${currentTab}"]`);
-            activeTab.classList.add('bg-gradient-to-r', 'from-blue-500', 'to-purple-500', 'text-white');
-            activeTab.classList.remove('hover:bg-white/10');
-
-            // Update indicator position
-            const tabRect = activeTab.getBoundingClientRect();
-            const containerRect = activeTab.parentElement.getBoundingClientRect();
-            indicator.style.width = `${tabRect.width}px`;
-            indicator.style.transform = `translateX(${tabRect.left - containerRect.left}px)`;
-        }
-
-        // Setup event listeners
-        function setupEventListeners() {
-            // Modal controls
-            document.getElementById('addBtn').addEventListener('click', openModal);
-            document.getElementById('closeModal').addEventListener('click', closeModal);
-            document.getElementById('cancelBtn').addEventListener('click', closeModal);
-            document.getElementById('modal').addEventListener('click', function(e) {
-                if (e.target === this) closeModal();
-            });
-
-            // Form submission
-            document.getElementById('form').addEventListener('submit', handleSubmit);
-
-            // Search
-            document.getElementById('searchInput').addEventListener('input', function() {
-                renderTable(this.value);
-            });
-
-            // Export
-            document.getElementById('exportBtn').addEventListener('click', exportData);
-            
-            // Google Drive connection
-            document.getElementById('connectGoogleDrive').addEventListener('click', connectToGoogleDrive);
-        }
-
-        // Connect to Google Drive
-        function connectToGoogleDrive() {
-            gapi.auth2.getAuthInstance().signIn().then(() => {
-                googleDriveConnected = true;
-                updateGoogleDriveStatus();
-                showToast('Google Drive berhasil tersambung!');
-            }).catch(error => {
-                console.error('Error connecting to Google Drive:', error);
-                showToast('Gagal tersambung ke Google Drive', 'error');
-            });
-        }
-
-        // Save data to Google Drive
-        async function saveToGoogleDrive() {
-            if (!googleDriveConnected) {
-                showToast('Silakan sambungkan Google Drive terlebih dahulu', 'error');
-                return;
-            }
-
-            try {
-                // Create workbook with three sheets
-                const wb = XLSX.utils.book_new();
-                
-                // Create data for each category
-                const satpamData = data.satpam.map((item, index) => ({
-                    'No': index + 1,
-                    'Nama': item.nama,
-                    'NIP': item.nip,
-                    'Status': item.status
-                }));
-                
-                const sopirData = data.sopir.map((item, index) => ({
-                    'No': index + 1,
-                    'Nama': item.nama,
-                    'NIP': item.nip,
-                    'Status': item.status
-                }));
-                
-                const kebersihanData = data.kebersihan.map((item, index) => ({
-                    'No': index + 1,
-                    'Nama': item.nama,
-                    'NIP': item.nip,
-                    'Status': item.status
-                }));
-                
-                // Create sheets
-                const wsSatpam = XLSX.utils.json_to_sheet(satpamData);
-                const wsSopir = XLSX.utils.json_to_sheet(sopirData);
-                const wsKebersihan = XLSX.utils.json_to_sheet(kebersihanData);
-                
-                // Add sheets to workbook
-                XLSX.utils.book_append_sheet(wb, wsSatpam, 'Satpam');
-                XLSX.utils.book_append_sheet(wb, wsSopir, 'Sopir');
-                XLSX.utils.book_append_sheet(wb, wsKebersihan, 'Kebersihan');
-                
-                // Generate Excel file
-                const excelData = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-                const blob = new Blob([excelData], { type: 'application/octet-stream' });
-                
-                // Check if file exists
-                const fileList = await gapi.client.drive.files.list({
-                    q: `name='${FILE_NAME}' and parents in '${FOLDER_ID}' and trashed=false`,
-                    fields: 'files(id, name)'
-                });
-                
-                if (fileList.result.files.length > 0) {
-                    // File exists, update it
-                    const fileId = fileList.result.files[0].id;
-                    await gapi.client.drive.files.update({
-                        fileId: fileId,
-                        media: {
-                            mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                            body: blob
-                        }
-                    });
-                    showToast('Data berhasil diperbarui di Google Drive!');
-                } else {
-                    // File doesn't exist, create it
-                    const metadata = {
-                        name: FILE_NAME,
-                        parents: [FOLDER_ID],
-                        mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                    };
                     
-                    await gapi.client.drive.files.create({
-                        resource: metadata,
-                        media: {
-                            mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                            body: blob
-                        }
+                    // Update active nav link
+                    navLinks.forEach(navLink => {
+                        navLink.classList.remove('active');
                     });
-                    showToast('Data berhasil disimpan ke Google Drive!');
-                }
-            } catch (error) {
-                console.error('Error saving to Google Drive:', error);
-                showToast('Gagal menyimpan data ke Google Drive', 'error');
-            }
-        }
-
-        // Render table
-        function renderTable(searchTerm = '') {
-            const tbody = document.getElementById('dataTable');
-            const currentData = data[currentTab] || [];
-            
-            let filteredData = currentData;
-            if (searchTerm) {
-                filteredData = currentData.filter(item => 
-                    item.nama.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    item.nip.toLowerCase().includes(searchTerm.toLowerCase())
-                );
-            }
-
-            tbody.innerHTML = filteredData.map((item, index) => `
-                <tr class="border-b border-gray-700 hover:bg-white/5 transition-all">
-                    <td class="py-3 px-4">${index + 1}</td>
-                    <td class="py-3 px-4 font-medium">${item.nama}</td>
-                    <td class="py-3 px-4 text-gray-400">${item.nip}</td>
-                    <td class="py-3 px-4">
-                        <span class="status-badge ${item.status === 'Aktif' ? 'status-active' : 'status-inactive'}">
-                            ${item.status}
-                        </span>
-                    </td>
-                    <td class="py-3 px-4">
-                        <button onclick="editItem(${item.id})" class="text-blue-400 hover:text-blue-300 mr-3 transition-all">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button onclick="deleteItem(${item.id})" class="text-red-400 hover:text-red-300 transition-all">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        // Update counts
-        function updateCounts() {
-            document.getElementById('satpamCount').textContent = data.satpam.length;
-            document.getElementById('sopirCount').textContent = data.sopir.length;
-            document.getElementById('kebersihanCount').textContent = data.kebersihan.length;
-        }
-
-        // Modal functions
-        function openModal(id = null) {
-            const modal = document.getElementById('modal');
-            const title = document.getElementById('modalTitle');
-            const form = document.getElementById('form');
-            
-            editingId = id;
-            
-            if (id) {
-                title.textContent = 'Edit Data';
-                const item = findItem(id);
-                if (item) {
-                    document.getElementById('nama').value = item.nama;
-                    document.getElementById('nip').value = item.nip;
-                    document.getElementById('divisi').value = currentTab;
-                    document.getElementById('status').value = item.status;
-                }
-            } else {
-                title.textContent = 'Tambah Data';
-                form.reset();
-                document.getElementById('divisi').value = currentTab;
-            }
-            
-            modal.classList.remove('hidden');
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('modal');
-            modal.classList.add('hidden');
-            editingId = null;
-        }
-
-        // Find item
-        function findItem(id) {
-            const currentData = data[currentTab] || [];
-            return currentData.find(item => item.id === id);
-        }
-
-        // Handle form submission
-        function handleSubmit(e) {
-            e.preventDefault();
-            
-            const formData = {
-                nama: document.getElementById('nama').value,
-                nip: document.getElementById('nip').value,
-                status: document.getElementById('status').value
-            };
-
-            if (editingId) {
-                // Update existing item
-                const currentData = data[currentTab] || [];
-                const index = currentData.findIndex(item => item.id === editingId);
-                if (index !== -1) {
-                    currentData[index] = { ...currentData[index], ...formData };
-                }
-                showToast('Data berhasil diperbarui!');
-            } else {
-                // Add new item
-                const newId = Math.max(...Object.values(data).flat().map(item => item.id), 0) + 1;
-                data[currentTab].push({ id: newId, ...formData });
-                showToast('Data berhasil ditambahkan!');
-            }
-
-            closeModal();
-            renderTable();
-            updateCounts();
-            
-            // Save to Google Drive
-            saveToGoogleDrive();
-        }
-
-        // Edit item
-        function editItem(id) {
-            openModal(id);
-        }
-
-        // Delete item
-        function deleteItem(id) {
-            if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
-                const currentData = data[currentTab] || [];
-                data[currentTab] = currentData.filter(item => item.id !== id);
-                renderTable();
-                updateCounts();
-                showToast('Data berhasil dihapus!');
-                
-                // Save to Google Drive
-                saveToGoogleDrive();
-            }
-        }
-
-        // Show toast
-        function showToast(message, type = 'success') {
-            const toast = document.getElementById('toast');
-            const toastMessage = document.getElementById('toastMessage');
-            
-            toastMessage.textContent = message;
-            
-            if (type === 'error') {
-                toast.className = 'fixed bottom-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-full transition-transform';
-            } else {
-                toast.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-full transition-transform';
-            }
-            
-            toast.classList.remove('hidden', 'translate-y-full');
-            
-            setTimeout(() => {
-                toast.classList.add('translate-y-full');
-                setTimeout(() => {
-                    toast.classList.add('hidden');
-                }, 300);
-            }, 3000);
-        }
-
-        // Export data
-        function exportData() {
-            const currentData = data[currentTab] || [];
-            const csvContent = "data:text/csv;charset=utf-8," 
-                + "Nama,NIP,Status\n"
-                + currentData.map(item => `${item.nama},${item.nip},${item.status}`).join("\n");
-            
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", `data_${currentTab}_${new Date().toISOString().split('T')[0]}.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            showToast('Data berhasil diekspor!');
-        }
+                    
+                    // Set active on clicked link and corresponding nav link
+                    this.classList.add('active');
+                    const mainNavLink = document.querySelector(`.dropdown-menu a[data-page="${targetPage}"]`);
+                    if (mainNavLink) {
+                        mainNavLink.classList.add('active');
+                    }
+                    
+                    // Close dropdown menu
+                    hamburgerBtn.classList.remove('active');
+                    dropdownMenu.classList.remove('show');
+                    
+                    // Scroll to top
+                    window.scrollTo(0, 0);
+                });
+            });
+        });
     </script>
 </body>
 </html>
