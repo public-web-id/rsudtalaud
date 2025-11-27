@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manajemen Outsourcing RSUD Talaud</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <style>
+        :root {
+            --primary-color: #1e40af;
+            --secondary-color: #3b82f6;
+            --accent-color: #f59e0b;
+            --dark-bg: #0f172a;
+            --light-bg: #f8fafc;
+        }
+
+        * {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+
+        /* Glass morphism effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Glow effect */
+        .glow {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+
+        /* Fade in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* Slide in animation */
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .slide-in {
+            animation: slideIn 0.4s ease-out;
+        }
+
+        /* Pulse animation */
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .pulse-hover:hover {
+            animation: pulse 0.3s ease-in-out;
+        }
+
+        /* Card hover effect */
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Tab indicator */
+        .tab-indicator {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Loading spinner */
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top: 3px solid #3b82f6;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Modal animation */
+        .modal-enter {
+            animation: modalEnter 0.3s ease-out;
+        }
+
+        @keyframes modalEnter {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Button styles */
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* Form input styles */
+        .form-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        /* Status badge */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+        }
+
+        .status-inactive {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
+        /* Responsive 18:9 ratio */
+        .container-18-9 {
+            max-width: 100%;
+            padding: 0 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .container-18-9 {
+                max-width: 800px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .container-18-9 {
+                max-width: 1600px;
+            }
+        }
+
+        /* Google Drive status indicator */
+        .google-drive-status {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .google-drive-connected {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+        }
+
+        .google-drive-disconnected {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+    </style>
+</head>
+<body class="text-white">
+    <!-- Header -->
+    <header class="glass sticky top-0 z-50 fade-in">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                        RSUD Talaud
+                    </h1>
+                    <p class="text-sm text-gray-400">Manajemen Outsourcing</p>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div id="googleDriveStatus" class="google-drive-status google-drive-disconnected">
+                        <i class="fas fa-cloud mr-2"></i>
+                        <span>Google Drive: Tersambung</span>
+                    </div>
+                    <button id="connectGoogleDrive" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-all">
+                        <i class="fas fa-link mr-2"></i>Sambungkan Google Drive
+                    </button>
+                    <button class="relative p-2 hover:bg-white/10 rounded-lg transition-all">
+                        <i class="fas fa-bell text-xl"></i>
+                        <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+                    </button>
+                    <button class="flex items-center space-x-2 hover:bg-white/10 rounded-lg px-3 py-2 transition-all">
+                        <img src="https://picsum.photos/seed/admin/40/40" alt="Admin" class="w-8 h-8 rounded-full">
+                        <span class="text-sm">Admin</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8 container-18-9">
+        <!-- Dashboard Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 fade-in">
+            <div class="glass rounded-xl p-6 card-hover">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-shield-alt text-blue-400 text-xl"></i>
+                    </div>
+                    <span class="text-2xl font-bold" id="satpamCount">0</span>
+                </div>
+                <h3 class="text-lg font-semibold mb-1">Satpam</h3>
+                <p class="text-sm text-gray-400">Total Personil</p>
+            </div>
+
+            <div class="glass rounded-xl p-6 card-hover">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-car text-green-400 text-xl"></i>
+                    </div>
+                    <span class="text-2xl font-bold" id="sopirCount">0</span>
+                </div>
+                <h3 class="text-lg font-semibold mb-1">Sopir</h3>
+                <p class="text-sm text-gray-400">Total Personil</p>
+            </div>
+
+            <div class="glass rounded-xl p-6 card-hover">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-broom text-purple-400 text-xl"></i>
+                    </div>
+                    <span class="text-2xl font-bold" id="kebersihanCount">0</span>
+                </div>
+                <h3 class="text-lg font-semibold mb-1">Kebersihan</h3>
+                <p class="text-sm text-gray-400">Total Personil</p>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="glass rounded-xl p-1 mb-6 fade-in">
+            <div class="flex space-x-1">
+                <button class="tab-btn flex-1 py-3 px-6 rounded-lg text-center font-medium transition-all" data-tab="satpam">
+                    <i class="fas fa-shield-alt mr-2"></i>Satpam
+                </button>
+                <button class="tab-btn flex-1 py-3 px-6 rounded-lg text-center font-medium transition-all" data-tab="sopir">
+                    <i class="fas fa-car mr-2"></i>Sopir
+                </button>
+                <button class="tab-btn flex-1 py-3 px-6 rounded-lg text-center font-medium transition-all" data-tab="kebersihan">
+                    <i class="fas fa-broom mr-2"></i>Kebersihan
+                </button>
+            </div>
+            <div class="tab-indicator h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg mt-1"></div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="glass rounded-xl p-6 fade-in">
+            <!-- Search and Actions -->
+            <div class="flex flex-col md:flex-row justify-between items-center mb-6 space-y-4 md:space-y-0">
+                <div class="relative w-full md:w-96">
+                    <input type="text" id="searchInput" placeholder="Cari nama, NIP, atau divisi..." 
+                           class="form-input w-full pl-10 pr-4 py-2 rounded-lg text-white placeholder-gray-400">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+                <div class="flex space-x-3">
+                    <button id="exportBtn" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-all">
+                        <i class="fas fa-file-export mr-2"></i>Export
+                    </button>
+                    <button id="addBtn" class="btn-primary px-6 py-2 rounded-lg text-white font-medium transition-all">
+                        <i class="fas fa-plus mr-2"></i>Tambah Data
+                    </button>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="border-b border-gray-700">
+                            <th class="text-left py-3 px-4">No</th>
+                            <th class="text-left py-3 px-4">Nama</th>
+                            <th class="text-left py-3 px-4">NIP</th>
+                            <th class="text-left py-3 px-4">Divisi</th>
+                            <th class="text-left py-3 px-4">Status</th>
+                            <th class="text-left py-3 px-4">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dataTable">
+                        <!-- Data will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="flex justify-center items-center mt-6 space-x-2">
+                <button class="px-3 py-1 rounded-lg hover:bg-white/10 transition-all">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="px-3 py-1 rounded-lg bg-blue-500/20 text-blue-400">1</button>
+                <button class="px-3 py-1 rounded-lg hover:bg-white/10 transition-all">2</button>
+                <button class="px-3 py-1 rounded-lg hover:bg-white/10 transition-all">3</button>
+                <button class="px-3 py-1 rounded-lg hover:bg-white/10 transition-all">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal -->
+    <div id="modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="glass rounded-xl p-6 w-full max-w-md modal-enter">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold" id="modalTitle">Tambah Data</h2>
+                <button id="closeModal" class="hover:bg-white/10 rounded-lg p-2 transition-all">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="form">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Nama</label>
+                        <input type="text" id="nama" required class="form-input w-full px-4 py-2 rounded-lg text-white">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">NIP</label>
+                        <input type="text" id="nip" required class="form-input w-full px-4 py-2 rounded-lg text-white">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Divisi</label>
+                        <select id="divisi" required class="form-input w-full px-4 py-2 rounded-lg text-white">
+                            <option value="">Pilih Divisi</option>
+                            <option value="Satpam">Satpam</option>
+                            <option value="Sopir">Sopir</option>
+                            <option value="Kebersihan">Kebersihan</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Status</label>
+                        <select id="status" required class="form-input w-full px-4 py-2 rounded-lg text-white">
+                            <option value="Aktif">Aktif</option>
+                            <option value="Tidak Aktif">Tidak Aktif</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex space-x-3 mt-6">
+                    <button type="button" id="cancelBtn" class="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-all">
+                        Batal
+                    </button>
+                    <button type="submit" class="flex-1 btn-primary px-4 py-2 rounded-lg text-white font-medium transition-all">
+                        Simpan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success Toast -->
+    <div id="toast" class="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg hidden transform translate-y-full transition-transform">
+        <i class="fas fa-check-circle mr-2"></i>
+        <span id="toastMessage">Berhasil!</span>
+    </div>
+
+    <script>
+        // Google Drive API Configuration
+        const CLIENT_ID = 'YOUR_CLIENT_ID'; // Ganti dengan Client ID Anda
+        const API_KEY = 'YOUR_API_KEY'; // Ganti dengan API Key Anda
+        const SCOPES = 'https://www.googleapis.com/auth/drive.file';
+        const FOLDER_ID = '1zWtn8b9lqhnuyy_Tk8tKRhaJ9m-hUE2R'; // Folder ID dari URL yang Anda berikan
+        const FILE_NAME = 'RSUD_Talaud_Data.xlsx';
+        
+        let gapi = null;
+        let googleDriveConnected = false;
+        
+        // Data storage
+        let data = {
+            satpam: [
+                { id: 1, nama: 'Ahmad Fauzi', nip: '198001012019011001', status: 'Aktif' },
+                { id: 2, nama: 'Budi Santoso', nip: '198502022020022002', status: 'Aktif' },
+                { id: 3, nama: 'Cahyono', nip: '199003032021033003', status: 'Tidak Aktif' }
+            ],
+            sopir: [
+                { id: 4, nama: 'Dedi Pratama', nip: '198104042022044004', status: 'Aktif' },
+                { id: 5, nama: 'Eko Saputra', nip: '198205052023055005', status: 'Aktif' }
+            ],
+            kebersihan: [
+                { id: 6, nama: 'Fina Sari', nip: '198306062024066006', status: 'Aktif' },
+                { id: 7, nama: 'Gita Wulandari', nip: '198407072025077007', status: 'Aktif' },
+                { id: 8, nama: 'Hendra Wijaya', nip: '198508082026088008', status: 'Tidak Aktif' }
+            ]
+        };
+
+        let currentTab = 'satpam';
+        let editingId = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            renderTable();
+            updateCounts();
+            setupEventListeners();
+            setupTabs();
+            initGoogleDrive();
+        });
+
+        // Initialize Google Drive API
+        function initGoogleDrive() {
+            gapi.load('client:auth2', () => {
+                gapi.client.init({
+                    apiKey: API_KEY,
+                    clientId: CLIENT_ID,
+                    discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
+                    scope: SCOPES
+                }).then(() => {
+                    // Check if user is already signed in
+                    const authInstance = gapi.auth2.getAuthInstance();
+                    const isSignedIn = authInstance.isSignedIn.get();
+                    
+                    if (isSignedIn) {
+                        googleDriveConnected = true;
+                        updateGoogleDriveStatus();
+                    }
+                });
+            });
+        }
+
+        // Update Google Drive connection status
+        function updateGoogleDriveStatus() {
+            const statusElement = document.getElementById('googleDriveStatus');
+            const connectButton = document.getElementById('connectGoogleDrive');
+            
+            if (googleDriveConnected) {
+                statusElement.className = 'google-drive-status google-drive-connected';
+                statusElement.innerHTML = '<i class="fas fa-check-circle mr-2"></i><span>Google Drive: Tersambung</span>';
+                connectButton.style.display = 'none';
+            } else {
+                statusElement.className = 'google-drive-status google-drive-disconnected';
+                statusElement.innerHTML = '<i class="fas fa-exclamation-circle mr-2"></i><span>Google Drive: Belum Tersambung</span>';
+                connectButton.style.display = 'inline-block';
+            }
+        }
+
+        // Setup tabs
+        function setupTabs() {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const indicator = document.querySelector('.tab-indicator');
+            
+            tabs.forEach((tab, index) => {
+                tab.addEventListener('click', function() {
+                    currentTab = this.dataset.tab;
+                    updateActiveTab();
+                    renderTable();
+                });
+            });
+
+            updateActiveTab();
+        }
+
+        function updateActiveTab() {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const indicator = document.querySelector('.tab-indicator');
+            
+            tabs.forEach(tab => {
+                tab.classList.remove('bg-gradient-to-r', 'from-blue-500', 'to-purple-500', 'text-white');
+                tab.classList.add('hover:bg-white/10');
+            });
+
+            const activeTab = document.querySelector(`[data-tab="${currentTab}"]`);
+            activeTab.classList.add('bg-gradient-to-r', 'from-blue-500', 'to-purple-500', 'text-white');
+            activeTab.classList.remove('hover:bg-white/10');
+
+            // Update indicator position
+            const tabRect = activeTab.getBoundingClientRect();
+            const containerRect = activeTab.parentElement.getBoundingClientRect();
+            indicator.style.width = `${tabRect.width}px`;
+            indicator.style.transform = `translateX(${tabRect.left - containerRect.left}px)`;
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Modal controls
+            document.getElementById('addBtn').addEventListener('click', openModal);
+            document.getElementById('closeModal').addEventListener('click', closeModal);
+            document.getElementById('cancelBtn').addEventListener('click', closeModal);
+            document.getElementById('modal').addEventListener('click', function(e) {
+                if (e.target === this) closeModal();
+            });
+
+            // Form submission
+            document.getElementById('form').addEventListener('submit', handleSubmit);
+
+            // Search
+            document.getElementById('searchInput').addEventListener('input', function() {
+                renderTable(this.value);
+            });
+
+            // Export
+            document.getElementById('exportBtn').addEventListener('click', exportData);
+            
+            // Google Drive connection
+            document.getElementById('connectGoogleDrive').addEventListener('click', connectToGoogleDrive);
+        }
+
+        // Connect to Google Drive
+        function connectToGoogleDrive() {
+            gapi.auth2.getAuthInstance().signIn().then(() => {
+                googleDriveConnected = true;
+                updateGoogleDriveStatus();
+                showToast('Google Drive berhasil tersambung!');
+            }).catch(error => {
+                console.error('Error connecting to Google Drive:', error);
+                showToast('Gagal tersambung ke Google Drive', 'error');
+            });
+        }
+
+        // Save data to Google Drive
+        async function saveToGoogleDrive() {
+            if (!googleDriveConnected) {
+                showToast('Silakan sambungkan Google Drive terlebih dahulu', 'error');
+                return;
+            }
+
+            try {
+                // Create workbook with three sheets
+                const wb = XLSX.utils.book_new();
+                
+                // Create data for each category
+                const satpamData = data.satpam.map((item, index) => ({
+                    'No': index + 1,
+                    'Nama': item.nama,
+                    'NIP': item.nip,
+                    'Status': item.status
+                }));
+                
+                const sopirData = data.sopir.map((item, index) => ({
+                    'No': index + 1,
+                    'Nama': item.nama,
+                    'NIP': item.nip,
+                    'Status': item.status
+                }));
+                
+                const kebersihanData = data.kebersihan.map((item, index) => ({
+                    'No': index + 1,
+                    'Nama': item.nama,
+                    'NIP': item.nip,
+                    'Status': item.status
+                }));
+                
+                // Create sheets
+                const wsSatpam = XLSX.utils.json_to_sheet(satpamData);
+                const wsSopir = XLSX.utils.json_to_sheet(sopirData);
+                const wsKebersihan = XLSX.utils.json_to_sheet(kebersihanData);
+                
+                // Add sheets to workbook
+                XLSX.utils.book_append_sheet(wb, wsSatpam, 'Satpam');
+                XLSX.utils.book_append_sheet(wb, wsSopir, 'Sopir');
+                XLSX.utils.book_append_sheet(wb, wsKebersihan, 'Kebersihan');
+                
+                // Generate Excel file
+                const excelData = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+                const blob = new Blob([excelData], { type: 'application/octet-stream' });
+                
+                // Check if file exists
+                const fileList = await gapi.client.drive.files.list({
+                    q: `name='${FILE_NAME}' and parents in '${FOLDER_ID}' and trashed=false`,
+                    fields: 'files(id, name)'
+                });
+                
+                if (fileList.result.files.length > 0) {
+                    // File exists, update it
+                    const fileId = fileList.result.files[0].id;
+                    await gapi.client.drive.files.update({
+                        fileId: fileId,
+                        media: {
+                            mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                            body: blob
+                        }
+                    });
+                    showToast('Data berhasil diperbarui di Google Drive!');
+                } else {
+                    // File doesn't exist, create it
+                    const metadata = {
+                        name: FILE_NAME,
+                        parents: [FOLDER_ID],
+                        mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                    };
+                    
+                    await gapi.client.drive.files.create({
+                        resource: metadata,
+                        media: {
+                            mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                            body: blob
+                        }
+                    });
+                    showToast('Data berhasil disimpan ke Google Drive!');
+                }
+            } catch (error) {
+                console.error('Error saving to Google Drive:', error);
+                showToast('Gagal menyimpan data ke Google Drive', 'error');
+            }
+        }
+
+        // Render table
+        function renderTable(searchTerm = '') {
+            const tbody = document.getElementById('dataTable');
+            const currentData = data[currentTab] || [];
+            
+            let filteredData = currentData;
+            if (searchTerm) {
+                filteredData = currentData.filter(item => 
+                    item.nama.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    item.nip.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+            }
+
+            tbody.innerHTML = filteredData.map((item, index) => `
+                <tr class="border-b border-gray-700 hover:bg-white/5 transition-all">
+                    <td class="py-3 px-4">${index + 1}</td>
+                    <td class="py-3 px-4 font-medium">${item.nama}</td>
+                    <td class="py-3 px-4 text-gray-400">${item.nip}</td>
+                    <td class="py-3 px-4">
+                        <span class="status-badge ${item.status === 'Aktif' ? 'status-active' : 'status-inactive'}">
+                            ${item.status}
+                        </span>
+                    </td>
+                    <td class="py-3 px-4">
+                        <button onclick="editItem(${item.id})" class="text-blue-400 hover:text-blue-300 mr-3 transition-all">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button onclick="deleteItem(${item.id})" class="text-red-400 hover:text-red-300 transition-all">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Update counts
+        function updateCounts() {
+            document.getElementById('satpamCount').textContent = data.satpam.length;
+            document.getElementById('sopirCount').textContent = data.sopir.length;
+            document.getElementById('kebersihanCount').textContent = data.kebersihan.length;
+        }
+
+        // Modal functions
+        function openModal(id = null) {
+            const modal = document.getElementById('modal');
+            const title = document.getElementById('modalTitle');
+            const form = document.getElementById('form');
+            
+            editingId = id;
+            
+            if (id) {
+                title.textContent = 'Edit Data';
+                const item = findItem(id);
+                if (item) {
+                    document.getElementById('nama').value = item.nama;
+                    document.getElementById('nip').value = item.nip;
+                    document.getElementById('divisi').value = currentTab;
+                    document.getElementById('status').value = item.status;
+                }
+            } else {
+                title.textContent = 'Tambah Data';
+                form.reset();
+                document.getElementById('divisi').value = currentTab;
+            }
+            
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.add('hidden');
+            editingId = null;
+        }
+
+        // Find item
+        function findItem(id) {
+            const currentData = data[currentTab] || [];
+            return currentData.find(item => item.id === id);
+        }
+
+        // Handle form submission
+        function handleSubmit(e) {
+            e.preventDefault();
+            
+            const formData = {
+                nama: document.getElementById('nama').value,
+                nip: document.getElementById('nip').value,
+                status: document.getElementById('status').value
+            };
+
+            if (editingId) {
+                // Update existing item
+                const currentData = data[currentTab] || [];
+                const index = currentData.findIndex(item => item.id === editingId);
+                if (index !== -1) {
+                    currentData[index] = { ...currentData[index], ...formData };
+                }
+                showToast('Data berhasil diperbarui!');
+            } else {
+                // Add new item
+                const newId = Math.max(...Object.values(data).flat().map(item => item.id), 0) + 1;
+                data[currentTab].push({ id: newId, ...formData });
+                showToast('Data berhasil ditambahkan!');
+            }
+
+            closeModal();
+            renderTable();
+            updateCounts();
+            
+            // Save to Google Drive
+            saveToGoogleDrive();
+        }
+
+        // Edit item
+        function editItem(id) {
+            openModal(id);
+        }
+
+        // Delete item
+        function deleteItem(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
+                const currentData = data[currentTab] || [];
+                data[currentTab] = currentData.filter(item => item.id !== id);
+                renderTable();
+                updateCounts();
+                showToast('Data berhasil dihapus!');
+                
+                // Save to Google Drive
+                saveToGoogleDrive();
+            }
+        }
+
+        // Show toast
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toastMessage.textContent = message;
+            
+            if (type === 'error') {
+                toast.className = 'fixed bottom-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-full transition-transform';
+            } else {
+                toast.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-full transition-transform';
+            }
+            
+            toast.classList.remove('hidden', 'translate-y-full');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-full');
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                }, 300);
+            }, 3000);
+        }
+
+        // Export data
+        function exportData() {
+            const currentData = data[currentTab] || [];
+            const csvContent = "data:text/csv;charset=utf-8," 
+                + "Nama,NIP,Status\n"
+                + currentData.map(item => `${item.nama},${item.nip},${item.status}`).join("\n");
+            
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `data_${currentTab}_${new Date().toISOString().split('T')[0]}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            showToast('Data berhasil diekspor!');
+        }
+    </script>
+</body>
+</html>
