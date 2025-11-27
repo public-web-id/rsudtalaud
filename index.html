@@ -127,7 +127,7 @@
         
         .header-content {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
         }
         
@@ -140,7 +140,61 @@
             align-items: center;
         }
         
-        /* Hamburger menu styles */
+        /* Permanent Bottom Navigation */
+        .bottom-nav {
+            background-color: var(--primary-color);
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            padding: 8px 0;
+            position: sticky;
+            bottom: 0;
+            z-index: 1000;
+            flex-shrink: 0;
+        }
+        
+        .bottom-nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15px;
+        }
+        
+        .nav-menu {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            flex: 1;
+            justify-content: center;
+        }
+        
+        .nav-menu a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .nav-menu a:hover, .nav-menu a.active {
+            color: white;
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        .nav-menu i {
+            font-size: 1rem;
+            margin-bottom: 2px;
+        }
+        
+        .nav-menu span {
+            font-size: 0.65rem;
+        }
+        
+        /* Hamburger menu styles - moved to bottom */
         .hamburger-menu {
             position: relative;
             z-index: 1001;
@@ -183,18 +237,18 @@
         /* Dropdown menu styles */
         .dropdown-menu {
             position: absolute;
-            top: 100%;
+            bottom: 100%;
             right: 0;
             background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-            min-width: 200px; /* Smaller width */
+            border-radius: 8px 8px 0 0;
+            box-shadow: 0 -8px 25px rgba(0,0,0,0.15);
+            min-width: 200px;
             opacity: 0;
             visibility: hidden;
-            transform: translateY(-20px);
+            transform: translateY(20px);
             transition: all 0.3s ease;
             z-index: 1000;
-            margin-top: 5px;
+            margin-bottom: 5px;
             overflow: hidden;
         }
         
@@ -220,12 +274,12 @@
         
         .dropdown-menu a {
             display: block;
-            padding: 10px 15px; /* Smaller padding */
+            padding: 10px 15px;
             color: #333;
             text-decoration: none;
             transition: all 0.3s ease;
             font-weight: 500;
-            font-size: 0.85rem; /* Smaller font */
+            font-size: 0.85rem;
         }
         
         .dropdown-menu a:hover {
@@ -253,13 +307,13 @@
         .main-content {
             flex: 1;
             overflow-y: auto;
-            padding-bottom: 0;
+            padding-bottom: 60px; /* Added padding to account for fixed bottom nav */
         }
         
         .hero-section {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
-            padding: 30px 0; /* Reduced padding */
+            padding: 30px 0;
             margin-bottom: 20px;
         }
         
@@ -269,7 +323,7 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             transition: transform 0.3s, box-shadow 0.3s;
             height: 100%;
-            margin-bottom: 15px; /* Smaller margin */
+            margin-bottom: 15px;
         }
         
         .card:hover {
@@ -277,19 +331,10 @@
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
         
-        /* Footer styles - fixed at bottom */
-        .footer {
-            background-color: var(--dark-color);
-            color: white;
-            padding: 15px 0 10px; /* Smaller padding */
-            margin-top: 0;
-            flex-shrink: 0;
-        }
-        
         .page-section {
             display: none;
             animation: fadeIn 0.5s;
-            padding-bottom: 10px; /* Smaller padding */
+            padding-bottom: 10px;
         }
         
         .page-section.active {
@@ -302,7 +347,7 @@
         }
         
         .org-chart {
-            padding: 15px 0; /* Reduced padding */
+            padding: 15px 0;
             overflow-x: auto;
             max-width: 100%;
         }
@@ -311,27 +356,27 @@
             background-color: white;
             border: 2px solid var(--primary-color);
             border-radius: 8px;
-            padding: 10px; /* Smaller padding */
-            margin: 8px auto; /* Smaller margin */
+            padding: 10px;
+            margin: 8px auto;
             text-align: center;
             position: relative;
-            max-width: 240px; /* Smaller width */
-            font-size: 0.8rem; /* Smaller font */
+            max-width: 240px;
+            font-size: 0.8rem;
         }
         
         .org-box h5, .org-box h6 {
-            font-size: 0.85rem; /* Smaller font */
+            font-size: 0.85rem;
             margin-bottom: 3px;
         }
         
         .org-box p {
-            font-size: 0.75rem; /* Smaller font */
+            font-size: 0.75rem;
             margin-bottom: 2px;
         }
         
         .org-box.small {
-            max-width: 180px; /* Smaller width */
-            padding: 6px; /* Smaller padding */
+            max-width: 180px;
+            padding: 6px;
         }
         
         .org-box.director {
@@ -361,7 +406,7 @@
         
         .org-line {
             width: 2px;
-            height: 15px; /* Smaller height */
+            height: 15px;
             background-color: var(--primary-color);
             margin: 0 auto;
         }
@@ -369,26 +414,26 @@
         .org-horizontal-line {
             height: 2px;
             background-color: var(--primary-color);
-            margin: 6px 0; /* Smaller margin */
+            margin: 6px 0;
         }
         
         .org-branch {
             display: flex;
             justify-content: center;
-            margin-top: 10px; /* Smaller margin */
+            margin-top: 10px;
             flex-wrap: wrap;
-            gap: 6px; /* Smaller gap */
+            gap: 6px;
         }
         
         .org-branch-item {
             flex: 1;
-            min-width: 240px; /* Smaller width */
-            margin: 0 3px; /* Smaller margin */
+            min-width: 240px;
+            margin: 0 3px;
         }
         
         .org-vertical-line {
             width: 2px;
-            height: 15px; /* Smaller height */
+            height: 15px;
             background-color: var(--primary-color);
             margin: 0 auto;
         }
@@ -397,51 +442,51 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            margin-top: 10px; /* Smaller margin */
-            gap: 4px; /* Smaller gap */
+            margin-top: 10px;
+            gap: 4px;
         }
         
         .org-sub-item {
             flex: 1;
-            min-width: 140px; /* Smaller width */
-            margin: 0 2px 6px; /* Smaller margin */
+            min-width: 140px;
+            margin: 0 2px 6px;
         }
         
         .testimonial {
             background-color: var(--light-color);
             border-left: 4px solid var(--primary-color);
-            padding: 15px; /* Smaller padding */
-            margin: 15px 0; /* Smaller margin */
+            padding: 15px;
+            margin: 15px 0;
             border-radius: 0 8px 8px 0;
         }
         
         .accreditation-star {
             color: #ffc107;
-            font-size: 1.5rem; /* Smaller size */
+            font-size: 1.5rem;
         }
         
         .committee-card {
             border-left: 4px solid var(--primary-color);
-            margin-bottom: 15px; /* Smaller margin */
+            margin-bottom: 15px;
         }
         
         .room-card {
             text-align: center;
-            padding: 15px; /* Smaller padding */
-            margin-bottom: 15px; /* Smaller margin */
+            padding: 15px;
+            margin-bottom: 15px;
         }
         
         .room-icon {
-            font-size: 2rem; /* Smaller size */
+            font-size: 2rem;
             color: var(--primary-color);
-            margin-bottom: 10px; /* Smaller margin */
+            margin-bottom: 10px;
         }
         
         .facility-card {
             background-color: var(--light-color);
             border-radius: 10px;
-            padding: 15px; /* Smaller padding */
-            margin-bottom: 15px; /* Smaller margin */
+            padding: 15px;
+            margin-bottom: 15px;
             transition: transform 0.3s;
             text-align: center;
         }
@@ -453,13 +498,13 @@
         .facility-title {
             color: var(--primary-color);
             font-weight: 600;
-            margin-bottom: 6px; /* Smaller margin */
-            font-size: 0.9rem; /* Smaller font */
+            margin-bottom: 6px;
+            font-size: 0.9rem;
         }
         
         .service-card {
-            padding: 15px; /* Smaller padding */
-            margin-bottom: 15px; /* Smaller margin */
+            padding: 15px;
+            margin-bottom: 15px;
             border-left: 4px solid var(--primary-color);
             background-color: white;
             border-radius: 0 8px 8px 0;
@@ -475,35 +520,35 @@
         .service-title {
             color: var(--primary-color);
             font-weight: 600;
-            margin-bottom: 6px; /* Smaller margin */
+            margin-bottom: 6px;
         }
         
         .service-icon {
-            font-size: 1.8rem; /* Smaller size */
+            font-size: 1.8rem;
             color: var(--primary-color);
-            margin-bottom: 10px; /* Smaller margin */
+            margin-bottom: 10px;
         }
         
         /* Enhanced doctor schedule styles */
         .doctor-schedule-container {
             background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
             border-radius: 15px;
-            padding: 18px; /* Smaller padding */
+            padding: 18px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            margin-bottom: 20px; /* Smaller margin */
+            margin-bottom: 20px;
         }
         
         .schedule-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 18px; /* Smaller margin */
+            margin-bottom: 18px;
             flex-wrap: wrap;
-            gap: 10px; /* Smaller gap */
+            gap: 10px;
         }
         
         .schedule-title {
-            font-size: 1.4rem; /* Smaller font */
+            font-size: 1.4rem;
             font-weight: 700;
             color: var(--primary-color);
             margin: 0;
@@ -512,21 +557,21 @@
         .schedule-legend {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px; /* Smaller gap */
+            gap: 8px;
         }
         
         .legend-item {
             display: flex;
             align-items: center;
-            font-size: 0.75rem; /* Smaller font */
+            font-size: 0.75rem;
             font-weight: 500;
         }
         
         .legend-color {
-            width: 10px; /* Smaller size */
+            width: 10px;
             height: 10px;
             border-radius: 50%;
-            margin-right: 4px; /* Smaller margin */
+            margin-right: 4px;
         }
         
         .legend-pediatri { background-color: #1976d2; }
@@ -534,11 +579,12 @@
         .legend-surgery { background-color: #388e3c; }
         .legend-internal { background-color: #f57c00; }
         
+        /* Smaller schedule grid */
         .schedule-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 15px; /* Smaller gap */
-            margin-top: 15px; /* Smaller margin */
+            gap: 12px;
+            margin-top: 15px;
         }
         
         .doctor-card {
@@ -573,18 +619,18 @@
         }
         
         .doctor-header {
-            padding: 10px 12px; /* Smaller padding */
+            padding: 10px 12px;
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             border-bottom: 1px solid #e0e0e0;
         }
         
         .doctor-specialty {
             display: inline-block;
-            padding: 2px 6px; /* Smaller padding */
+            padding: 2px 6px;
             border-radius: 20px;
-            font-size: 0.7rem; /* Smaller font */
+            font-size: 0.7rem;
             font-weight: 600;
-            margin-bottom: 4px; /* Smaller margin */
+            margin-bottom: 4px;
             color: white;
         }
         
@@ -607,12 +653,12 @@
         .doctor-name {
             font-weight: 600;
             color: #333;
-            font-size: 0.85rem; /* Smaller font */
+            font-size: 0.85rem;
             margin: 0;
         }
         
         .doctor-content {
-            padding: 12px; /* Smaller padding */
+            padding: 12px;
         }
         
         .schedule-list {
@@ -624,7 +670,7 @@
         .schedule-item {
             display: flex;
             align-items: center;
-            padding: 6px 0; /* Smaller padding */
+            padding: 6px 0;
             border-bottom: 1px solid #f0f0f0;
             transition: all 0.3s ease;
         }
@@ -636,7 +682,7 @@
         .schedule-item:hover {
             background-color: rgba(227, 242, 253, 0.3);
             border-radius: 8px;
-            padding-left: 6px; /* Smaller padding */
+            padding-left: 6px;
             padding-right: 6px;
             margin-left: -6px;
             margin-right: -6px;
@@ -645,12 +691,12 @@
         .day-badge {
             display: inline-flex;
             align-items: center;
-            padding: 3px 6px; /* Smaller padding */
+            padding: 3px 6px;
             border-radius: 20px;
-            font-size: 0.7rem; /* Smaller font */
+            font-size: 0.7rem;
             font-weight: 500;
-            margin-right: 6px; /* Smaller margin */
-            min-width: 80px; /* Smaller width */
+            margin-right: 6px;
+            min-width: 80px;
             justify-content: center;
         }
         
@@ -667,27 +713,27 @@
         .time-badge {
             display: inline-flex;
             align-items: center;
-            padding: 3px 6px; /* Smaller padding */
+            padding: 3px 6px;
             border-radius: 20px;
-            font-size: 0.7rem; /* Smaller font */
+            font-size: 0.7rem;
             font-weight: 500;
             background-color: var(--success-color);
             color: white;
         }
         
         .schedule-badge i {
-            margin-right: 2px; /* Smaller margin */
-            font-size: 0.7rem; /* Smaller size */
+            margin-right: 2px;
+            font-size: 0.7rem;
         }
         
         .certificate-container {
             position: relative;
-            margin: 18px 0; /* Smaller margin */
+            margin: 18px 0;
         }
         
         .certificate-image {
             width: 100%;
-            max-width: 550px; /* Smaller width */
+            max-width: 550px;
             height: auto;
             border-radius: 10px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
@@ -698,20 +744,20 @@
         .certificate-details {
             background-color: var(--light-color);
             border-radius: 10px;
-            padding: 15px; /* Smaller padding */
-            margin-top: 18px; /* Smaller margin */
+            padding: 15px;
+            margin-top: 18px;
         }
         
         .certificate-details h4 {
             color: var(--primary-color);
-            margin-bottom: 10px; /* Smaller margin */
+            margin-bottom: 10px;
             font-weight: 600;
-            font-size: 1rem; /* Smaller font */
+            font-size: 1rem;
         }
         
         .detail-item {
-            margin-bottom: 8px; /* Smaller margin */
-            padding-bottom: 8px; /* Smaller padding */
+            margin-bottom: 8px;
+            padding-bottom: 8px;
             border-bottom: 1px solid rgba(0,0,0,0.1);
         }
         
@@ -722,31 +768,31 @@
         .detail-label {
             font-weight: 600;
             color: var(--dark-color);
-            margin-bottom: 2px; /* Smaller margin */
-            font-size: 0.85rem; /* Smaller font */
+            margin-bottom: 2px;
+            font-size: 0.85rem;
         }
         
         .detail-value {
             color: #333;
-            font-size: 0.8rem; /* Smaller font */
+            font-size: 0.8rem;
         }
         
         .highlight-box {
             background-color: var(--primary-color);
             color: white;
-            padding: 10px 12px; /* Smaller padding */
+            padding: 10px 12px;
             border-radius: 8px;
-            margin: 12px 0; /* Smaller margin */
+            margin: 12px 0;
         }
         
         .highlight-box h5 {
-            font-size: 0.9rem; /* Smaller font */
-            margin-bottom: 6px; /* Smaller margin */
+            font-size: 0.9rem;
+            margin-bottom: 6px;
         }
         
         .highlight-box ul {
-            font-size: 0.8rem; /* Smaller font */
-            padding-left: 15px; /* Smaller padding */
+            font-size: 0.8rem;
+            padding-left: 15px;
         }
         
         .zoom-container {
@@ -763,130 +809,108 @@
         
         /* Mobile-specific adjustments */
         h1 {
-            font-size: 1.5rem; /* Smaller font */
-            margin-bottom: 0.8rem; /* Smaller margin */
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
         }
         
         h2 {
-            font-size: 1.3rem; /* Smaller font */
-            margin-bottom: 0.6rem; /* Smaller margin */
+            font-size: 1.3rem;
+            margin-bottom: 0.6rem;
         }
         
         h3 {
-            font-size: 1.1rem; /* Smaller font */
+            font-size: 1.1rem;
         }
         
         h4 {
-            font-size: 1rem; /* Smaller font */
+            font-size: 1rem;
         }
         
         h5 {
-            font-size: 0.9rem; /* Smaller font */
+            font-size: 0.9rem;
         }
         
         p {
-            font-size: 0.85rem; /* Smaller font */
+            font-size: 0.85rem;
             line-height: 1.4;
         }
         
         .lead {
-            font-size: 0.9rem; /* Smaller font */
+            font-size: 0.9rem;
         }
         
         .display-4 {
-            font-size: 1.8rem; /* Smaller font */
+            font-size: 1.8rem;
         }
         
         .card-body {
-            padding: 0.8rem; /* Smaller padding */
+            padding: 0.8rem;
         }
         
         .card-title {
-            font-size: 0.9rem; /* Smaller font */
-            margin-bottom: 0.5rem; /* Smaller margin */
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
         }
         
         .card-text {
-            font-size: 0.8rem; /* Smaller font */
+            font-size: 0.8rem;
         }
         
         .btn {
-            font-size: 0.8rem; /* Smaller font */
-            padding: 5px 12px; /* Smaller padding */
+            font-size: 0.8rem;
+            padding: 5px 12px;
         }
         
         .alert {
-            font-size: 0.8rem; /* Smaller font */
-            padding: 8px 12px; /* Smaller padding */
+            font-size: 0.8rem;
+            padding: 8px 12px;
         }
         
         .badge {
-            font-size: 0.65rem; /* Smaller font */
+            font-size: 0.65rem;
         }
         
         /* Override all media queries */
         @media (min-width: 576px) {
             .container, .container-sm {
-                max-width: 720px !important; /* Adjusted for smaller container */
+                max-width: 720px !important;
             }
         }
         
         @media (min-width: 768px) {
             .container, .container-sm, .container-md {
-                max-width: 720px !important; /* Adjusted for smaller container */
+                max-width: 720px !important;
             }
         }
         
         @media (min-width: 992px) {
             .container, .container-sm, .container-md, .container-lg {
-                max-width: 720px !important; /* Adjusted for smaller container */
+                max-width: 720px !important;
             }
         }
         
         @media (min-width: 1200px) {
             .container, .container-sm, .container-md, .container-lg, .container-xl {
-                max-width: 720px !important; /* Adjusted for smaller container */
+                max-width: 720px !important;
             }
         }
         
         @media (min-width: 1400px) {
             .container, .container-sm, .container-md, .container-lg, .container-xl, .container-xxl {
-                max-width: 720px !important; /* Adjusted for smaller container */
+                max-width: 720px !important;
             }
         }
     </style>
 </head>
 <body>
     <div class="tablet-container">
-        <!-- New Header with Hamburger Menu -->
+        <!-- Header -->
         <header class="header">
             <div class="header-content">
                 <a class="navbar-brand" href="#">
                     <i class="bi bi-hospital me-2"></i>
                     RSUD Kabupaten Kepulauan Talaud
                 </a>
-                
-                <!-- Hamburger Menu -->
-                <div class="hamburger-menu">
-                    <button class="hamburger-btn" id="hamburgerBtn">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
-                    
-                    <!-- Dropdown Menu -->
-                    <div class="dropdown-menu" id="dropdownMenu">
-                        <ul>
-                            <li><a href="#" class="active" data-page="beranda"><i class="bi bi-house-door"></i>Beranda</a></li>
-                            <li><a href="#" data-page="profil"><i class="bi bi-building"></i>Profil</a></li>
-                            <li><a href="#" data-page="pelayanan"><i class="bi bi-heart-pulse"></i>Pelayanan</a></li>
-                            <li><a href="#" data-page="ruangan"><i class="bi bi-door-open"></i>Ruangan</a></li>
-                            <li><a href="#" data-page="jadwal"><i class="bi bi-calendar3"></i>Jadwal Spesialis</a></li>
-                            <li><a href="#" data-page="akreditasi"><i class="bi bi-award"></i>Akreditasi</a></li>
-                            <li><a href="#" data-page="komite"><i class="bi bi-people"></i>Komite</a></li>
-                        </ul>
-                    </div>
-                </div>
             </div>
         </header>
 
@@ -956,7 +980,7 @@
                     
                     <div class="row mb-3">
                         <div class="col-12">
-                            <h2 class="text-center mb-3">Fasilitas Unggulan</h2>
+                            <h2 class="text-center mb-3">Fasilitas</h2>
                             <div class="row">
                                 <div class="col-md-3 mb-2">
                                     <div class="facility-card h-100">
@@ -966,14 +990,14 @@
                                 </div>
                                 <div class="col-md-3 mb-2">
                                     <div class="facility-card h-100">
-                                        <i class="bi bi-virus facility-icon"></i>
-                                        <h5 class="facility-title">Laboratorium</h5>
+                                        <i class="bi bi-exclamation-triangle-fill facility-icon"></i>
+                                        <h5 class="facility-title">Radiologi</h5>
                                     </div>
                                 </div>
                                 <div class="col-md-3 mb-2">
                                     <div class="facility-card h-100">
-                                        <i class="bi bi-x-ray facility-icon"></i>
-                                        <h5 class="facility-title">Radiologi</h5>
+                                        <i class="bi bi-virus facility-icon"></i>
+                                        <h5 class="facility-title">Laboratorium</h5>
                                     </div>
                                 </div>
                                 <div class="col-md-3 mb-2">
@@ -1282,7 +1306,7 @@
                         </div>
                         <div class="col-md-4 mb-2">
                             <div class="service-card h-100">
-                                <i class="bi bi-x-ray service-icon"></i>
+                                <i class="bi bi-exclamation-triangle-fill service-icon"></i>
                                 <h5 class="service-title">Pelayanan Radiologi</h5>
                                 <p>Pelayanan radiologi dengan teknologi canggih untuk pemeriksaan X-ray, USG, dan CT scan untuk diagnosa yang tepat.</p>
                             </div>
@@ -1786,33 +1810,62 @@
             </section>
         </div>
 
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h5>RSUD Kabupaten Kepulauan Talaud</h5>
-                        <p>Rumah Sakit Umum Daerah Kabupaten Kepulauan Talaud berkomitmen memberikan pelayanan kesehatan terbaik bagi masyarakat.</p>
-                        <p><i class="bi bi-geo-alt-fill me-2"></i>Jl. Raya Mala-Melonguane, Talaud-Sulut</p>
-                    </div>
-                    <div class="col-md-6 text-md-end">
-                        <h5>Menu Cepat</h5>
-                        <ul class="list-unstyled">
-                            <li><a href="#" class="text-white-50 text-decoration-none" data-page="beranda">Beranda</a></li>
-                            <li><a href="#" class="text-white-50 text-decoration-none" data-page="profil">Profil</a></li>
-                            <li><a href="#" class="text-white-50 text-decoration-none" data-page="pelayanan">Pelayanan</a></li>
-                            <li><a href="#" class="text-white-50 text-decoration-none" data-page="ruangan">Ruangan</a></li>
+        <!-- Permanent Bottom Navigation -->
+        <nav class="bottom-nav">
+            <div class="bottom-nav-content">
+                <div class="nav-menu">
+                    <a href="#" class="active" data-page="beranda">
+                        <i class="bi bi-house-door"></i>
+                        <span>Beranda</span>
+                    </a>
+                    <a href="#" data-page="profil">
+                        <i class="bi bi-building"></i>
+                        <span>Profil</span>
+                    </a>
+                    <a href="#" data-page="pelayanan">
+                        <i class="bi bi-heart-pulse"></i>
+                        <span>Pelayanan</span>
+                    </a>
+                    <a href="#" data-page="ruangan">
+                        <i class="bi bi-door-open"></i>
+                        <span>Ruangan</span>
+                    </a>
+                    <a href="#" data-page="jadwal">
+                        <i class="bi bi-calendar3"></i>
+                        <span>Jadwal</span>
+                    </a>
+                    <a href="#" data-page="akreditasi">
+                        <i class="bi bi-award"></i>
+                        <span>Akreditasi</span>
+                    </a>
+                    <a href="#" data-page="komite">
+                        <i class="bi bi-people"></i>
+                        <span>Komite</span>
+                    </a>
+                </div>
+                
+                <!-- Hamburger Menu -->
+                <div class="hamburger-menu">
+                    <button class="hamburger-btn" id="hamburgerBtn">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    
+                    <!-- Dropdown Menu -->
+                    <div class="dropdown-menu" id="dropdownMenu">
+                        <ul>
+                            <li><a href="#" class="active" data-page="beranda"><i class="bi bi-house-door"></i>Beranda</a></li>
+                            <li><a href="#" data-page="profil"><i class="bi bi-building"></i>Profil</a></li>
+                            <li><a href="#" data-page="pelayanan"><i class="bi bi-heart-pulse"></i>Pelayanan</a></li>
+                            <li><a href="#" data-page="ruangan"><i class="bi bi-door-open"></i>Ruangan</a></li>
+                            <li><a href="#" data-page="jadwal"><i class="bi bi-calendar3"></i>Jadwal Spesialis</a></li>
+                            <li><a href="#" data-page="akreditasi"><i class="bi bi-award"></i>Akreditasi</a></li>
+                            <li><a href="#" data-page="komite"><i class="bi bi-people"></i>Komite</a></li>
                         </ul>
                     </div>
                 </div>
-                <hr class="my-2 bg-white-50">
-                <div class="row">
-                    <div class="col-12 text-center">
-                        <p class="mb-0">&copy; 2023 RSUD Kabupaten Kepulauan Talaud. Hak Cipta Dilindungi.</p>
-                    </div>
-                </div>
-            </div>
-        </footer>
+            </nav>
     </div>
 
     <!-- Bootstrap JS -->
@@ -1838,7 +1891,7 @@
             });
             
             // Get all navigation links
-            const navLinks = document.querySelectorAll('.dropdown-menu a[data-page], .footer a[data-page]');
+            const navLinks = document.querySelectorAll('.nav-menu a[data-page], .dropdown-menu a[data-page]');
             
             // Add click event to each navigation link
             navLinks.forEach(link => {
@@ -1867,7 +1920,7 @@
                     
                     // Set active on clicked link and corresponding nav link
                     this.classList.add('active');
-                    const mainNavLink = document.querySelector(`.dropdown-menu a[data-page="${targetPage}"]`);
+                    const mainNavLink = document.querySelector(`.nav-menu a[data-page="${targetPage}"]`);
                     if (mainNavLink) {
                         mainNavLink.classList.add('active');
                     }
